@@ -1,0 +1,151 @@
+name: Build docs and npm publish
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print all context
+        run: |
+          echo 'env=${{ toJSON(env) }}'
+          echo 'github=${{ toJSON(github) }}'
+          echo 'inputs=${{ toJSON(inputs) }}'
+          echo 'job=${{ toJSON(job) }}'
+          echo 'runner=${{ toJSON(runner) }}'
+          echo 'secrets=${{ toJSON(secrets) }}'
+          echo 'steps=${{ toJSON(steps) }}'
+          echo 'vars=${{ toJSON(vars) }}'
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'yarn'
+      - name: install, lint, test, build
+        run: |
+          set -ex
+          yarn
+          yarn lint
+          yarn test:ci
+          yarn build
+          yarn publish:test
+  deploy:
+    if: github.ref == 'refs/heads/master'
+    needs: test
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'yarn'
+      - name: install and build
+        run: |
+          set -ex
+          yarn
+          yarn test:ci
+          yarn build
+      - name: Coveralls
+        uses: coverallsapp/github-action@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      # - uses: actions/configure-pages@v4
+      # - name: Upload artifact
+      #   uses: actions/upload-pages-artifact@v3
+      #   with:
+      #     path: './dist'
+      # - name: Deploy to GitHub Pages
+      #   id: deployment
+      #   uses: actions/deploy-pages@v4
+      - name: 發布至 npm
+        uses: JS-DevTools/npm-publish@v3
+        id: npm-publish
+        with:
+          access: public
+          token: ${{ secrets.NPM_TOKEN }}
+      - name: jsDelivr Purge
+        if: ${{ steps.npm-publish.outputs.type }}
+        uses: egad13/purge-jsdelivr-cache@v1
+        with:
+          url: |
+            https://cdn.jsdelivr.net/npm/@taichunmin/crc@0
+            https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/+esm
+            https://cdn.jsdelivr.net/npm/@taichunmin/crc
+            https://cdn.jsdelivr.net/npm/@taichunmin/crc/+esm
+
+            https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/index.global.js
+            https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/index.mjs/+esm
+            https://cdn.jsdelivr.net/npm/@taichunmin/crc/dist/index.global.js
+            https://cdn.jsdelivr.net/npm/@taichunmin/crc/dist/index.mjs/+esm
+
+            https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32.global.js
+            https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32.mjs/+esm
+            https://cdn.jsdelivr.net/npm/@taichunmin/crc/dist/crc32.global.js
+            https://cdn.jsdelivr.net/npm/@taichunmin/crc/dist/crc32.mjs/+esm
+
+            https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32bzip2.global.js
+            https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32bzip2.mjs/+esm
+            https://cdn.jsdelivr.net/npm/@taichunmin/crc/dist/crc32bzip2.global.js
+            https://cdn.jsdelivr.net/npm/@taichunmin/crc/dist/crc32bzip2.mjs/+esm
+
+            https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32c.global.js
+            https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32c.mjs/+esm
+            https://cdn.jsdelivr.net/npm/@taichunmin/crc/dist/crc32c.global.js
+            https://cdn.jsdelivr.net/npm/@taichunmin/crc/dist/crc32c.mjs/+esm
+
+            https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32d.global.js
+            https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32d.mjs/+esm
+            https://cdn.jsdelivr.net/npm/@taichunmin/crc/dist/crc32d.global.js
+            https://cdn.jsdelivr.net/npm/@taichunmin/crc/dist/crc32d.mjs/+esm
+
+            https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32jamcrc.global.js
+            https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32jamcrc.mjs/+esm
+            https://cdn.jsdelivr.net/npm/@taichunmin/crc/dist/crc32jamcrc.global.js
+            https://cdn.jsdelivr.net/npm/@taichunmin/crc/dist/crc32jamcrc.mjs/+esm
+
+            https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32mpeg2.global.js
+            https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32mpeg2.mjs/+esm
+            https://cdn.jsdelivr.net/npm/@taichunmin/crc/dist/crc32mpeg2.global.js
+            https://cdn.jsdelivr.net/npm/@taichunmin/crc/dist/crc32mpeg2.mjs/+esm
+
+            https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32posix.global.js
+            https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32posix.mjs/+esm
+            https://cdn.jsdelivr.net/npm/@taichunmin/crc/dist/crc32posix.global.js
+            https://cdn.jsdelivr.net/npm/@taichunmin/crc/dist/crc32posix.mjs/+esm
+
+            https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32q.global.js
+            https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32q.mjs/+esm
+            https://cdn.jsdelivr.net/npm/@taichunmin/crc/dist/crc32q.global.js
+            https://cdn.jsdelivr.net/npm/@taichunmin/crc/dist/crc32q.mjs/+esm
+
+            https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32sata.global.js
+            https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32sata.mjs/+esm
+            https://cdn.jsdelivr.net/npm/@taichunmin/crc/dist/crc32sata.global.js
+            https://cdn.jsdelivr.net/npm/@taichunmin/crc/dist/crc32sata.mjs/+esm
+
+            https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32xfer.global.js
+            https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32xfer.mjs/+esm
+            https://cdn.jsdelivr.net/npm/@taichunmin/crc/dist/crc32xfer.global.js
+            https://cdn.jsdelivr.net/npm/@taichunmin/crc/dist/crc32xfer.mjs/+esm
+
+            https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/genericCrc32.global.js
+            https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/genericCrc32.mjs/+esm
+            https://cdn.jsdelivr.net/npm/@taichunmin/crc/dist/genericCrc32.global.js
+            https://cdn.jsdelivr.net/npm/@taichunmin/crc/dist/genericCrc32.mjs/+esm

@@ -1,0 +1,169 @@
+{
+  "description": "A cross platform alternative for calculating Cyclic Redundancy Checks (CRC) values.",
+  "homepage": "https://github.com/taichunmin/js-crc",
+  "jsnext:main": "dist/index.mjs",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "name": "@taichunmin/crc",
+  "version": "0.0.1",
+  "author": {
+    "email": "taichunmin@gmail.com",
+    "name": "Chunmin Tai",
+    "url": "https://taichunmin.idv.tw"
+  },
+  "bugs": {
+    "url": "https://github.com/taichunmin/js-crc/issues"
+  },
+  "contributors": [
+    {
+      "email": "taichunmin@gmail.com",
+      "name": "Chunmin Tai",
+      "url": "https://taichunmin.idv.tw"
+    }
+  ],
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "types": {
+        "import": "./dist/index.d.mts",
+        "require": "./dist/index.d.ts"
+      },
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "script": "./dist/index.global.js"
+    },
+    "./crc32": {
+      "types": {
+        "import": "./dist/crc32.d.mts",
+        "require": "./dist/crc32.d.ts"
+      },
+      "import": "./dist/crc32.mjs",
+      "require": "./dist/crc32.js",
+      "script": "./dist/crc32.global.js"
+    },
+    "./crc32bzip2": {
+      "types": {
+        "import": "./dist/crc32bzip2.d.mts",
+        "require": "./dist/crc32bzip2.d.ts"
+      },
+      "import": "./dist/crc32bzip2.mjs",
+      "require": "./dist/crc32bzip2.js",
+      "script": "./dist/crc32bzip2.global.js"
+    },
+    "./crc32c": {
+      "types": {
+        "import": "./dist/crc32c.d.mts",
+        "require": "./dist/crc32c.d.ts"
+      },
+      "import": "./dist/crc32c.mjs",
+      "require": "./dist/crc32c.js",
+      "script": "./dist/crc32c.global.js"
+    },
+    "./crc32d": {
+      "types": {
+        "import": "./dist/crc32d.d.mts",
+        "require": "./dist/crc32d.d.ts"
+      },
+      "import": "./dist/crc32d.mjs",
+      "require": "./dist/crc32d.js",
+      "script": "./dist/crc32d.global.js"
+    },
+    "./crc32jamcrc": {
+      "types": {
+        "import": "./dist/crc32jamcrc.d.mts",
+        "require": "./dist/crc32jamcrc.d.ts"
+      },
+      "import": "./dist/crc32jamcrc.mjs",
+      "require": "./dist/crc32jamcrc.js",
+      "script": "./dist/crc32jamcrc.global.js"
+    },
+    "./crc32mpeg2": {
+      "types": {
+        "import": "./dist/crc32mpeg2.d.mts",
+        "require": "./dist/crc32mpeg2.d.ts"
+      },
+      "import": "./dist/crc32mpeg2.mjs",
+      "require": "./dist/crc32mpeg2.js",
+      "script": "./dist/crc32mpeg2.global.js"
+    },
+    "./crc32posix": {
+      "types": {
+        "import": "./dist/crc32posix.d.mts",
+        "require": "./dist/crc32posix.d.ts"
+      },
+      "import": "./dist/crc32posix.mjs",
+      "require": "./dist/crc32posix.js",
+      "script": "./dist/crc32posix.global.js"
+    },
+    "./crc32q": {
+      "types": {
+        "import": "./dist/crc32q.d.mts",
+        "require": "./dist/crc32q.d.ts"
+      },
+      "import": "./dist/crc32q.mjs",
+      "require": "./dist/crc32q.js",
+      "script": "./dist/crc32q.global.js"
+    },
+    "./crc32sata": {
+      "types": {
+        "import": "./dist/crc32sata.d.mts",
+        "require": "./dist/crc32sata.d.ts"
+      },
+      "import": "./dist/crc32sata.mjs",
+      "require": "./dist/crc32sata.js",
+      "script": "./dist/crc32sata.global.js"
+    },
+    "./crc32xfer": {
+      "types": {
+        "import": "./dist/crc32xfer.d.mts",
+        "require": "./dist/crc32xfer.d.ts"
+      },
+      "import": "./dist/crc32xfer.mjs",
+      "require": "./dist/crc32xfer.js",
+      "script": "./dist/crc32xfer.global.js"
+    }
+  },
+  "keywords": [
+    "crc32",
+    "crc32bzip2",
+    "crc32c",
+    "crc32d",
+    "crc32jamcrc",
+    "crc32mpeg2",
+    "crc32posix",
+    "crc32q",
+    "crc32sata",
+    "crc32xfer"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/taichunmin/js-crc.git"
+  },
+  "scripts": {
+    "build": "yarn build:js",
+    "build:js": "tsup",
+    "lint": "yarn lint:ci --fix",
+    "lint:ci": "eslint --ext ts --fix ./lib",
+    "publish:test": "npm publish --access public --dry-run",
+    "test": "jest --roots ./lib --",
+    "test:ci": "jest --roots ./lib --ci --coverage"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.12",
+    "@types/lodash": "^4.17.5",
+    "@types/node": "^20.14.8",
+    "@typescript-eslint/eslint-plugin": "^7.13.1",
+    "eslint": "^8.57.0",
+    "eslint-config-love": "^47",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-n": "^17.9.0",
+    "eslint-plugin-promise": "^6.2.0",
+    "jest": "^29.7.0",
+    "lodash": "^4.17.21",
+    "ts-jest": "^29.1.5",
+    "tsup": "^8.1.0",
+    "tsx": "^4.15.7",
+    "typescript": "^5.5.2"
+  }
+}
