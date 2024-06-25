@@ -103,6 +103,8 @@ Using jsDelivr CDN:
 
 ## Usage
 
+### Node.js
+
 Using specific CRC is the recommended way to reduce bundle size:
 
 ```js
@@ -140,6 +142,16 @@ let value = crc32()
 for (const chunk of ['one', 'two', 'three']) value = crc32(utf8Encoder.encode(chunk), value)
 value.toString(16)
 // "9e1c092"
+```
+
+### Browser
+
+```html
+<script type="module">
+  const { default: crc32 } = await import('https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32.mjs/+esm')
+  crc32(new Uint8Array([0x68, 0x65, 0x6C, 0x6C, 0x6F])).toString(16)
+  // "3610a686"
+</script>
 ```
 
 ## References
