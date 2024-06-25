@@ -26,7 +26,7 @@ export class GenericCrc32 {
   }
 
   buildPoly (poly: number): void {
-    const [i32, refin, refout, tbl] = [this.#i32, this.#refin, this.#refout, this.#poly]
+    const [i32, refin, tbl] = [this.#i32, this.#refin, this.#poly]
     for (let i = 0; i < 256; i++) {
       i32[0] = (refin ? reflect.u8(i) : i) << 24
       tbl[i] = 0
@@ -34,7 +34,7 @@ export class GenericCrc32 {
         tbl[i] = (((tbl[i] ^ i32[0]) & 0x80000000) !== 0 ? poly : 0) ^ (tbl[i] << 1)
         i32[0] <<= 1
       }
-      if (refout) tbl[i] = reflect.i32(tbl[i])
+      if (refin) tbl[i] = reflect.i32(tbl[i])
     }
   }
 
@@ -54,11 +54,12 @@ export class GenericCrc32 {
 
   getCrc (buf: Uint8Array): number {
     const [i32, refin, refout, tbl, xorout] = [this.#i32, this.#refin, this.#refout, this.#poly, this.#xorout]
-    i32[0] = this.#initial
     if (refin) {
+      i32[0] = reflect.i32(this.#initial)
       for (const b of buf) i32[0] = (i32[0] >>> 8) ^ tbl[(i32[0] ^ b) & 0xFF]
       return (refout ? i32[0] : reflect.i32(i32[0])) ^ xorout
     } else {
+      i32[0] = this.#initial
       for (const b of buf) i32[0] = (i32[0] << 8) ^ tbl[(i32[0] >>> 24) ^ b]
       return (refout ? reflect.i32(i32[0]) : i32[0]) ^ xorout
     }

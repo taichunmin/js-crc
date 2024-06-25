@@ -10,7 +10,7 @@ test.each([
   { crc: 'E3D6E35C', hex: '48656C6C6F20576F726C6421' },
   { crc: '340BC6D9', hex: '313233343536373839' },
 ])('crc32jamcrc(Buffer.from("$hex", "hex")) = 0x$crc', ({ hex, crc }) => {
-  const u8arr = hexToU8Arr(hex)
+  const u8arr = hex === '' ? undefined : hexToU8Arr(hex)
   expect(crc32jamcrc(u8arr)).toBe(~~parseInt(crc, 16))
 })
 

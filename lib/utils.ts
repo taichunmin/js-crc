@@ -14,12 +14,12 @@ class Reflect {
     return this.#tbl[u8 & 0xFF]
   }
 
-  i16 (i16: number): number {
-    return this.u8(i16) << 8 | this.u8(i16 >>> 8)
+  u16 (u16: number): number {
+    return this.u8(u16) << 8 | this.u8(u16 >>> 8)
   }
 
   i32 (i32: number): number {
-    return this.i16(i32) << 16 | this.i16(i32 >>> 16)
+    return this.u16(i32) << 16 | this.u16(i32 >>> 16)
   }
 }
 
@@ -27,4 +27,8 @@ export const reflect = new Reflect()
 
 export function i32ToHex (i32: number): string {
   return '0x' + `0000000${(i32 >>> 0).toString(16).toUpperCase()}`.slice(-8)
+}
+
+export function i16ToHex (i16: number): string {
+  return '0x' + `000${(i16 & 0xFFFF).toString(16).toUpperCase()}`.slice(-4)
 }

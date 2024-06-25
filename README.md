@@ -8,6 +8,29 @@ A cross platform alternative for calculating Cyclic Redundancy Checks (CRC) valu
 - Supports ESM, CommonJS and iife format.
 - Pure JavaScript implementation, no dependencies.
 - Supported CRC algorithms:
+  - crc16a
+  - crc16arc
+  - crc16augccitt
+  - crc16buypass
+  - crc16ccittfalse
+  - crc16cdma2000
+  - crc16dds110
+  - crc16dectr
+  - crc16dectx
+  - crc16dnp
+  - crc16en13757
+  - crc16genibus
+  - crc16kermit
+  - crc16maxim
+  - crc16mcrf4xx
+  - crc16modbus
+  - crc16riello
+  - crc16t10dif
+  - crc16teledisk
+  - crc16tms37157
+  - crc16usb
+  - crc16x25
+  - crc16xmodem
   - crc32
   - crc32bzip2
   - crc32c
@@ -37,28 +60,12 @@ Once the package is installed, you can import the library using import or requir
 
 ```js
 // import
+import crc16a from '@taichunmin/crc/crc16a'
 import crc32 from '@taichunmin/crc/crc32'
-import crc32bzip2 from '@taichunmin/crc/crc32bzip2'
-import crc32c from '@taichunmin/crc/crc32c'
-import crc32d from '@taichunmin/crc/crc32d'
-import crc32jamcrc from '@taichunmin/crc/crc32jamcrc'
-import crc32mpeg2 from '@taichunmin/crc/crc32mpeg2'
-import crc32posix from '@taichunmin/crc/crc32posix'
-import crc32q from '@taichunmin/crc/crc32q'
-import crc32sata from '@taichunmin/crc/crc32sata'
-import crc32xfer from '@taichunmin/crc/crc32xfer'
 
 // require
+const crc16a = require('@taichunmin/crc/crc16a')
 const crc32 = require('@taichunmin/crc/crc32')
-const crc32bzip2 = require('@taichunmin/crc/crc32bzip2')
-const crc32c = require('@taichunmin/crc/crc32c')
-const crc32d = require('@taichunmin/crc/crc32d')
-const crc32jamcrc = require('@taichunmin/crc/crc32jamcrc')
-const crc32mpeg2 = require('@taichunmin/crc/crc32mpeg2')
-const crc32posix = require('@taichunmin/crc/crc32posix')
-const crc32q = require('@taichunmin/crc/crc32q')
-const crc32sata = require('@taichunmin/crc/crc32sata')
-const crc32xfer = require('@taichunmin/crc/crc32xfer')
 ```
 
 ### CDN
@@ -69,35 +76,19 @@ Using jsDelivr CDN:
 <!-- script -->
 <script src="https://cdn.jsdelivr.net/npm/@taichunmin/crc@0"></script>
 <script>
-  const { crc32, crc32bzip2, crc32c, crc32d, crc32jamcrc, crc32mpeg2, crc32posix, crc32q, crc32sata, crc32xfer } = window?.taichunmin?.crc
+  const { crc16a, crc32 } = window?.taichunmin?.crc
 </script>
 
 <!-- module -->
 <script type="module">
+  import crc16a from 'https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc16a.mjs/+esm'
   import crc32 from 'https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32.mjs/+esm'
-  import crc32bzip2 from 'https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32bzip2.mjs/+esm'
-  import crc32c from 'https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32c.mjs/+esm'
-  import crc32d from 'https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32d.mjs/+esm'
-  import crc32jamcrc from 'https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32jamcrc.mjs/+esm'
-  import crc32mpeg2 from 'https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32mpeg2.mjs/+esm'
-  import crc32posix from 'https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32posix.mjs/+esm'
-  import crc32q from 'https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32q.mjs/+esm'
-  import crc32sata from 'https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32sata.mjs/+esm'
-  import crc32xfer from 'https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32xfer.mjs/+esm'
 </script>
 
 <!-- module + async import -->
 <script type="module">
+  const { default: crc16a } = await import('https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc16a.mjs/+esm')
   const { default: crc32 } = await import('https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32.mjs/+esm')
-  const { default: crc32bzip2 } = await import('https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32bzip2.mjs/+esm')
-  const { default: crc32c } = await import('https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32c.mjs/+esm')
-  const { default: crc32d } = await import('https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32d.mjs/+esm')
-  const { default: crc32jamcrc } = await import('https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32jamcrc.mjs/+esm')
-  const { default: crc32mpeg2 } = await import('https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32mpeg2.mjs/+esm')
-  const { default: crc32posix } = await import('https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32posix.mjs/+esm')
-  const { default: crc32q } = await import('https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32q.mjs/+esm')
-  const { default: crc32sata } = await import('https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32sata.mjs/+esm')
-  const { default: crc32xfer } = await import('https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32xfer.mjs/+esm')
 </script>
 ```
 
@@ -148,16 +139,24 @@ value.toString(16)
 
 ```html
 <script type="module">
-  const { default: crc32 } = await import('https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32.mjs/+esm')
+  import crc32 from 'https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32.mjs/+esm'
   crc32(new Uint8Array([0x68, 0x65, 0x6C, 0x6C, 0x6F])).toString(16)
   // "3610a686"
 </script>
 ```
 
+### Browser Devtools
+
+```js
+const { default: crc32 } = await import('https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32.mjs/+esm')
+crc32(new Uint8Array([0x68, 0x65, 0x6C, 0x6C, 0x6F])).toString(16)
+// "3610a686"
+```
+
 ## References
 
 - <https://crccalc.com/>
-- <http://www.sunshine2k.de/coding/javascript/crc/crc_js.html> [Backup](https://gist.github.com/taichunmin/92fa001f139e5a73f5127d9389123d78)
+- <http://www.sunshine2k.de/coding/javascript/crc/crc_js.html> [(Backup)](https://gist.github.com/taichunmin/92fa001f139e5a73f5127d9389123d78)
 - <https://github.com/mrhooray/crc-rs>
 - <https://github.com/alexgorbatchev/crc>
 - <https://github.com/overcat/fastcrc>

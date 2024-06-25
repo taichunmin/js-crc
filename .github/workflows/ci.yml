@@ -50,6 +50,8 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+    outputs:
+      npm-publish-type: ${{ steps.npm-publish.outputs.type }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -89,63 +91,55 @@ jobs:
             https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/+esm
             https://cdn.jsdelivr.net/npm/@taichunmin/crc
             https://cdn.jsdelivr.net/npm/@taichunmin/crc/+esm
-
-            https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/index.global.js
-            https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/index.mjs/+esm
-            https://cdn.jsdelivr.net/npm/@taichunmin/crc/dist/index.global.js
-            https://cdn.jsdelivr.net/npm/@taichunmin/crc/dist/index.mjs/+esm
-
-            https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32.global.js
-            https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32.mjs/+esm
-            https://cdn.jsdelivr.net/npm/@taichunmin/crc/dist/crc32.global.js
-            https://cdn.jsdelivr.net/npm/@taichunmin/crc/dist/crc32.mjs/+esm
-
-            https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32bzip2.global.js
-            https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32bzip2.mjs/+esm
-            https://cdn.jsdelivr.net/npm/@taichunmin/crc/dist/crc32bzip2.global.js
-            https://cdn.jsdelivr.net/npm/@taichunmin/crc/dist/crc32bzip2.mjs/+esm
-
-            https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32c.global.js
-            https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32c.mjs/+esm
-            https://cdn.jsdelivr.net/npm/@taichunmin/crc/dist/crc32c.global.js
-            https://cdn.jsdelivr.net/npm/@taichunmin/crc/dist/crc32c.mjs/+esm
-
-            https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32d.global.js
-            https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32d.mjs/+esm
-            https://cdn.jsdelivr.net/npm/@taichunmin/crc/dist/crc32d.global.js
-            https://cdn.jsdelivr.net/npm/@taichunmin/crc/dist/crc32d.mjs/+esm
-
-            https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32jamcrc.global.js
-            https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32jamcrc.mjs/+esm
-            https://cdn.jsdelivr.net/npm/@taichunmin/crc/dist/crc32jamcrc.global.js
-            https://cdn.jsdelivr.net/npm/@taichunmin/crc/dist/crc32jamcrc.mjs/+esm
-
-            https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32mpeg2.global.js
-            https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32mpeg2.mjs/+esm
-            https://cdn.jsdelivr.net/npm/@taichunmin/crc/dist/crc32mpeg2.global.js
-            https://cdn.jsdelivr.net/npm/@taichunmin/crc/dist/crc32mpeg2.mjs/+esm
-
-            https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32posix.global.js
-            https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32posix.mjs/+esm
-            https://cdn.jsdelivr.net/npm/@taichunmin/crc/dist/crc32posix.global.js
-            https://cdn.jsdelivr.net/npm/@taichunmin/crc/dist/crc32posix.mjs/+esm
-
-            https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32q.global.js
-            https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32q.mjs/+esm
-            https://cdn.jsdelivr.net/npm/@taichunmin/crc/dist/crc32q.global.js
-            https://cdn.jsdelivr.net/npm/@taichunmin/crc/dist/crc32q.mjs/+esm
-
-            https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32sata.global.js
-            https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32sata.mjs/+esm
-            https://cdn.jsdelivr.net/npm/@taichunmin/crc/dist/crc32sata.global.js
-            https://cdn.jsdelivr.net/npm/@taichunmin/crc/dist/crc32sata.mjs/+esm
-
-            https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32xfer.global.js
-            https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32xfer.mjs/+esm
-            https://cdn.jsdelivr.net/npm/@taichunmin/crc/dist/crc32xfer.global.js
-            https://cdn.jsdelivr.net/npm/@taichunmin/crc/dist/crc32xfer.mjs/+esm
-
-            https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/genericCrc32.global.js
-            https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/genericCrc32.mjs/+esm
-            https://cdn.jsdelivr.net/npm/@taichunmin/crc/dist/genericCrc32.global.js
-            https://cdn.jsdelivr.net/npm/@taichunmin/crc/dist/genericCrc32.mjs/+esm
+  jsdelivr:
+    if: ${{ needs.deploy.outputs.npm-publish-type }}
+    needs: deploy
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        filename:
+          - index
+          - crc16a
+          - crc16arc
+          - crc16augccitt
+          - crc16buypass
+          - crc16ccittfalse
+          - crc16cdma2000
+          - crc16dds110
+          - crc16dectr
+          - crc16dectx
+          - crc16dnp
+          - crc16en13757
+          - crc16genibus
+          - crc16kermit
+          - crc16maxim
+          - crc16mcrf4xx
+          - crc16modbus
+          - crc16riello
+          - crc16t10dif
+          - crc16teledisk
+          - crc16tms37157
+          - crc16usb
+          - crc16x25
+          - crc16xmodem
+          - crc32
+          - crc32bzip2
+          - crc32c
+          - crc32d
+          - crc32jamcrc
+          - crc32mpeg2
+          - crc32posix
+          - crc32q
+          - crc32sata
+          - crc32xfer
+          - genericCrc16
+          - genericCrc32
+    steps:
+      - name: jsDelivr Purge
+        uses: egad13/purge-jsdelivr-cache@v1
+        with:
+          url: |
+            https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/${{ matrix.filename }}.global.js
+            https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/${{ matrix.filename }}.mjs/+esm
+            https://cdn.jsdelivr.net/npm/@taichunmin/crc/dist/${{ matrix.filename }}.global.js
+            https://cdn.jsdelivr.net/npm/@taichunmin/crc/dist/${{ matrix.filename }}.mjs/+esm

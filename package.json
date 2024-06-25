@@ -6,7 +6,7 @@
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "name": "@taichunmin/crc",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "author": {
     "email": "taichunmin@gmail.com",
     "name": "Chunmin Tai",
@@ -32,6 +32,213 @@
       "import": "./dist/index.mjs",
       "require": "./dist/index.js",
       "script": "./dist/index.global.js"
+    },
+    "./crc16a": {
+      "types": {
+        "import": "./dist/crc16a.d.mts",
+        "require": "./dist/crc16a.d.ts"
+      },
+      "import": "./dist/crc16a.mjs",
+      "require": "./dist/crc16a.js",
+      "script": "./dist/crc16a.global.js"
+    },
+    "./crc16arc": {
+      "types": {
+        "import": "./dist/crc16arc.d.mts",
+        "require": "./dist/crc16arc.d.ts"
+      },
+      "import": "./dist/crc16arc.mjs",
+      "require": "./dist/crc16arc.js",
+      "script": "./dist/crc16arc.global.js"
+    },
+    "./crc16augccitt": {
+      "types": {
+        "import": "./dist/crc16augccitt.d.mts",
+        "require": "./dist/crc16augccitt.d.ts"
+      },
+      "import": "./dist/crc16augccitt.mjs",
+      "require": "./dist/crc16augccitt.js",
+      "script": "./dist/crc16augccitt.global.js"
+    },
+    "./crc16buypass": {
+      "types": {
+        "import": "./dist/crc16buypass.d.mts",
+        "require": "./dist/crc16buypass.d.ts"
+      },
+      "import": "./dist/crc16buypass.mjs",
+      "require": "./dist/crc16buypass.js",
+      "script": "./dist/crc16buypass.global.js"
+    },
+    "./crc16ccittfalse": {
+      "types": {
+        "import": "./dist/crc16ccittfalse.d.mts",
+        "require": "./dist/crc16ccittfalse.d.ts"
+      },
+      "import": "./dist/crc16ccittfalse.mjs",
+      "require": "./dist/crc16ccittfalse.js",
+      "script": "./dist/crc16ccittfalse.global.js"
+    },
+    "./crc16cdma2000": {
+      "types": {
+        "import": "./dist/crc16cdma2000.d.mts",
+        "require": "./dist/crc16cdma2000.d.ts"
+      },
+      "import": "./dist/crc16cdma2000.mjs",
+      "require": "./dist/crc16cdma2000.js",
+      "script": "./dist/crc16cdma2000.global.js"
+    },
+    "./crc16dds110": {
+      "types": {
+        "import": "./dist/crc16dds110.d.mts",
+        "require": "./dist/crc16dds110.d.ts"
+      },
+      "import": "./dist/crc16dds110.mjs",
+      "require": "./dist/crc16dds110.js",
+      "script": "./dist/crc16dds110.global.js"
+    },
+    "./crc16dectr": {
+      "types": {
+        "import": "./dist/crc16dectr.d.mts",
+        "require": "./dist/crc16dectr.d.ts"
+      },
+      "import": "./dist/crc16dectr.mjs",
+      "require": "./dist/crc16dectr.js",
+      "script": "./dist/crc16dectr.global.js"
+    },
+    "./crc16dectx": {
+      "types": {
+        "import": "./dist/crc16dectx.d.mts",
+        "require": "./dist/crc16dectx.d.ts"
+      },
+      "import": "./dist/crc16dectx.mjs",
+      "require": "./dist/crc16dectx.js",
+      "script": "./dist/crc16dectx.global.js"
+    },
+    "./crc16dnp": {
+      "types": {
+        "import": "./dist/crc16dnp.d.mts",
+        "require": "./dist/crc16dnp.d.ts"
+      },
+      "import": "./dist/crc16dnp.mjs",
+      "require": "./dist/crc16dnp.js",
+      "script": "./dist/crc16dnp.global.js"
+    },
+    "./crc16en13757": {
+      "types": {
+        "import": "./dist/crc16en13757.d.mts",
+        "require": "./dist/crc16en13757.d.ts"
+      },
+      "import": "./dist/crc16en13757.mjs",
+      "require": "./dist/crc16en13757.js",
+      "script": "./dist/crc16en13757.global.js"
+    },
+    "./crc16genibus": {
+      "types": {
+        "import": "./dist/crc16genibus.d.mts",
+        "require": "./dist/crc16genibus.d.ts"
+      },
+      "import": "./dist/crc16genibus.mjs",
+      "require": "./dist/crc16genibus.js",
+      "script": "./dist/crc16genibus.global.js"
+    },
+    "./crc16kermit": {
+      "types": {
+        "import": "./dist/crc16kermit.d.mts",
+        "require": "./dist/crc16kermit.d.ts"
+      },
+      "import": "./dist/crc16kermit.mjs",
+      "require": "./dist/crc16kermit.js",
+      "script": "./dist/crc16kermit.global.js"
+    },
+    "./crc16maxim": {
+      "types": {
+        "import": "./dist/crc16maxim.d.mts",
+        "require": "./dist/crc16maxim.d.ts"
+      },
+      "import": "./dist/crc16maxim.mjs",
+      "require": "./dist/crc16maxim.js",
+      "script": "./dist/crc16maxim.global.js"
+    },
+    "./crc16mcrf4xx": {
+      "types": {
+        "import": "./dist/crc16mcrf4xx.d.mts",
+        "require": "./dist/crc16mcrf4xx.d.ts"
+      },
+      "import": "./dist/crc16mcrf4xx.mjs",
+      "require": "./dist/crc16mcrf4xx.js",
+      "script": "./dist/crc16mcrf4xx.global.js"
+    },
+    "./crc16modbus": {
+      "types": {
+        "import": "./dist/crc16modbus.d.mts",
+        "require": "./dist/crc16modbus.d.ts"
+      },
+      "import": "./dist/crc16modbus.mjs",
+      "require": "./dist/crc16modbus.js",
+      "script": "./dist/crc16modbus.global.js"
+    },
+    "./crc16riello": {
+      "types": {
+        "import": "./dist/crc16riello.d.mts",
+        "require": "./dist/crc16riello.d.ts"
+      },
+      "import": "./dist/crc16riello.mjs",
+      "require": "./dist/crc16riello.js",
+      "script": "./dist/crc16riello.global.js"
+    },
+    "./crc16t10dif": {
+      "types": {
+        "import": "./dist/crc16t10dif.d.mts",
+        "require": "./dist/crc16t10dif.d.ts"
+      },
+      "import": "./dist/crc16t10dif.mjs",
+      "require": "./dist/crc16t10dif.js",
+      "script": "./dist/crc16t10dif.global.js"
+    },
+    "./crc16teledisk": {
+      "types": {
+        "import": "./dist/crc16teledisk.d.mts",
+        "require": "./dist/crc16teledisk.d.ts"
+      },
+      "import": "./dist/crc16teledisk.mjs",
+      "require": "./dist/crc16teledisk.js",
+      "script": "./dist/crc16teledisk.global.js"
+    },
+    "./crc16tms37157": {
+      "types": {
+        "import": "./dist/crc16tms37157.d.mts",
+        "require": "./dist/crc16tms37157.d.ts"
+      },
+      "import": "./dist/crc16tms37157.mjs",
+      "require": "./dist/crc16tms37157.js",
+      "script": "./dist/crc16tms37157.global.js"
+    },
+    "./crc16usb": {
+      "types": {
+        "import": "./dist/crc16usb.d.mts",
+        "require": "./dist/crc16usb.d.ts"
+      },
+      "import": "./dist/crc16usb.mjs",
+      "require": "./dist/crc16usb.js",
+      "script": "./dist/crc16usb.global.js"
+    },
+    "./crc16x25": {
+      "types": {
+        "import": "./dist/crc16x25.d.mts",
+        "require": "./dist/crc16x25.d.ts"
+      },
+      "import": "./dist/crc16x25.mjs",
+      "require": "./dist/crc16x25.js",
+      "script": "./dist/crc16x25.global.js"
+    },
+    "./crc16xmodem": {
+      "types": {
+        "import": "./dist/crc16xmodem.d.mts",
+        "require": "./dist/crc16xmodem.d.ts"
+      },
+      "import": "./dist/crc16xmodem.mjs",
+      "require": "./dist/crc16xmodem.js",
+      "script": "./dist/crc16xmodem.global.js"
     },
     "./crc32": {
       "types": {
@@ -122,6 +329,24 @@
       "import": "./dist/crc32xfer.mjs",
       "require": "./dist/crc32xfer.js",
       "script": "./dist/crc32xfer.global.js"
+    },
+    "./genericCrc16": {
+      "types": {
+        "import": "./dist/genericCrc16.d.mts",
+        "require": "./dist/genericCrc16.d.ts"
+      },
+      "import": "./dist/genericCrc16.mjs",
+      "require": "./dist/genericCrc16.js",
+      "script": "./dist/genericCrc16.global.js"
+    },
+    "./genericCrc32": {
+      "types": {
+        "import": "./dist/genericCrc32.d.mts",
+        "require": "./dist/genericCrc32.d.ts"
+      },
+      "import": "./dist/genericCrc32.mjs",
+      "require": "./dist/genericCrc32.js",
+      "script": "./dist/genericCrc32.global.js"
     }
   },
   "keywords": [

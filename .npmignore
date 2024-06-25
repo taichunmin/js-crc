@@ -130,6 +130,7 @@ out
 
 # extra ignore file for npm
 .*.js
+.github
 *.config.js
 *.config.ts
 tsconfig.json
