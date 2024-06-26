@@ -32,3 +32,7 @@ export function u32ToHex (i32: number): string {
 export function u16ToHex (i16: number): string {
   return '0x' + `000${(i16 & 0xFFFF).toString(16).toUpperCase()}`.slice(-4)
 }
+
+export function u8ToHex (i16: number): string {
+  return '0x' + `0${(i16 & 0xFF).toString(16).toUpperCase()}`.slice(-2)
+}

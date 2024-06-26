@@ -7,7 +7,7 @@
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "name": "@taichunmin/crc",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "author": {
     "email": "taichunmin@gmail.com",
     "name": "Chunmin Tai",
@@ -50,6 +50,123 @@
       "import": "./dist/index.mjs",
       "require": "./dist/index.js",
       "script": "./dist/index.global.js"
+    },
+    "./crc8": {
+      "types": {
+        "import": "./dist/crc8.d.mts",
+        "require": "./dist/crc8.d.ts"
+      },
+      "import": "./dist/crc8.mjs",
+      "require": "./dist/crc8.js",
+      "script": "./dist/crc8.global.js"
+    },
+    "./crc8autosar": {
+      "types": {
+        "import": "./dist/crc8autosar.d.mts",
+        "require": "./dist/crc8autosar.d.ts"
+      },
+      "import": "./dist/crc8autosar.mjs",
+      "require": "./dist/crc8autosar.js",
+      "script": "./dist/crc8autosar.global.js"
+    },
+    "./crc8cdma2000": {
+      "types": {
+        "import": "./dist/crc8cdma2000.d.mts",
+        "require": "./dist/crc8cdma2000.d.ts"
+      },
+      "import": "./dist/crc8cdma2000.mjs",
+      "require": "./dist/crc8cdma2000.js",
+      "script": "./dist/crc8cdma2000.global.js"
+    },
+    "./crc8darc": {
+      "types": {
+        "import": "./dist/crc8darc.d.mts",
+        "require": "./dist/crc8darc.d.ts"
+      },
+      "import": "./dist/crc8darc.mjs",
+      "require": "./dist/crc8darc.js",
+      "script": "./dist/crc8darc.global.js"
+    },
+    "./crc8dvbs2": {
+      "types": {
+        "import": "./dist/crc8dvbs2.d.mts",
+        "require": "./dist/crc8dvbs2.d.ts"
+      },
+      "import": "./dist/crc8dvbs2.mjs",
+      "require": "./dist/crc8dvbs2.js",
+      "script": "./dist/crc8dvbs2.global.js"
+    },
+    "./crc8ebu": {
+      "types": {
+        "import": "./dist/crc8ebu.d.mts",
+        "require": "./dist/crc8ebu.d.ts"
+      },
+      "import": "./dist/crc8ebu.mjs",
+      "require": "./dist/crc8ebu.js",
+      "script": "./dist/crc8ebu.global.js"
+    },
+    "./crc8icode": {
+      "types": {
+        "import": "./dist/crc8icode.d.mts",
+        "require": "./dist/crc8icode.d.ts"
+      },
+      "import": "./dist/crc8icode.mjs",
+      "require": "./dist/crc8icode.js",
+      "script": "./dist/crc8icode.global.js"
+    },
+    "./crc8itu": {
+      "types": {
+        "import": "./dist/crc8itu.d.mts",
+        "require": "./dist/crc8itu.d.ts"
+      },
+      "import": "./dist/crc8itu.mjs",
+      "require": "./dist/crc8itu.js",
+      "script": "./dist/crc8itu.global.js"
+    },
+    "./crc8maxim": {
+      "types": {
+        "import": "./dist/crc8maxim.d.mts",
+        "require": "./dist/crc8maxim.d.ts"
+      },
+      "import": "./dist/crc8maxim.mjs",
+      "require": "./dist/crc8maxim.js",
+      "script": "./dist/crc8maxim.global.js"
+    },
+    "./crc8rohc": {
+      "types": {
+        "import": "./dist/crc8rohc.d.mts",
+        "require": "./dist/crc8rohc.d.ts"
+      },
+      "import": "./dist/crc8rohc.mjs",
+      "require": "./dist/crc8rohc.js",
+      "script": "./dist/crc8rohc.global.js"
+    },
+    "./crc8saej1850": {
+      "types": {
+        "import": "./dist/crc8saej1850.d.mts",
+        "require": "./dist/crc8saej1850.d.ts"
+      },
+      "import": "./dist/crc8saej1850.mjs",
+      "require": "./dist/crc8saej1850.js",
+      "script": "./dist/crc8saej1850.global.js"
+    },
+    "./crc8saej1850zero": {
+      "types": {
+        "import": "./dist/crc8saej1850zero.d.mts",
+        "require": "./dist/crc8saej1850zero.d.ts"
+      },
+      "import": "./dist/crc8saej1850zero.mjs",
+      "require": "./dist/crc8saej1850zero.js",
+      "script": "./dist/crc8saej1850zero.global.js"
+    },
+    "./crc8wcdma": {
+      "types": {
+        "import": "./dist/crc8wcdma.d.mts",
+        "require": "./dist/crc8wcdma.d.ts"
+      },
+      "import": "./dist/crc8wcdma.mjs",
+      "require": "./dist/crc8wcdma.js",
+      "script": "./dist/crc8wcdma.global.js"
     },
     "./crc16a": {
       "types": {
@@ -368,6 +485,19 @@
     }
   },
   "keywords": [
+    "crc8",
+    "crc8autosar",
+    "crc8cdma2000",
+    "crc8darc",
+    "crc8dvbs2",
+    "crc8ebu",
+    "crc8icode",
+    "crc8itu",
+    "crc8maxim",
+    "crc8rohc",
+    "crc8saej1850",
+    "crc8saej1850zero",
+    "crc8wcdma",
     "crc16a",
     "crc16arc",
     "crc16augccitt",

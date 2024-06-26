@@ -23,39 +23,55 @@
 - Supports ESM, CommonJS and iife format.
 - Pure JavaScript implementation, no dependencies.
 - Supported CRC algorithms:
-  - crc16a
-  - crc16arc
-  - crc16augccitt
-  - crc16buypass
-  - crc16ccittfalse
-  - crc16cdma2000
-  - crc16dds110
-  - crc16dectr
-  - crc16dectx
-  - crc16dnp
-  - crc16en13757
-  - crc16genibus
-  - crc16kermit
-  - crc16maxim
-  - crc16mcrf4xx
-  - crc16modbus
-  - crc16riello
-  - crc16t10dif
-  - crc16teledisk
-  - crc16tms37157
-  - crc16usb
-  - crc16x25
-  - crc16xmodem
+  - crc8
+    - crc8: CRC8
+    - crc8autosar: CRC8_8H2F, CRC8_AUTOSAR
+    - crc8cdma2000: CRC8_CDMA2000
+    - crc8darc: CRC8_DARC
+    - crc8dvbs2: CRC8_DVB_S2
+    - crc8ebu: CRC8_EBU
+    - crc8icode: CRC8_ICODE
+    - crc8itu: CRC8_ITU
+    - crc8maxim: CRC8_MAXIM
+    - crc8rohc: CRC8_ROHC
+    - crc8saej1850: CRC8_SAE_J1850
+    - crc8saej1850zero: CRC8_SAE_J1850_ZERO
+    - crc8wcdma: CRC8_WCDMA
+  - crc16
+    - crc16a: CRC16_A
+    - crc16arc: CRC16_ARC, CRC16_IBM
+    - crc16augccitt: CRC16_AUG_CCITT
+    - crc16buypass: CRC16_BUYPASS
+    - crc16ccittfalse: CRC16_CCITT_FALSE
+    - crc16cdma2000: CRC16_CDMA2000
+    - crc16dds110: CRC16_DDS_110
+    - crc16dectr: CRC16_DECT_R
+    - crc16dectx: CRC16_DECT_X
+    - crc16dnp: CRC16_DNP
+    - crc16en13757: CRC16_EN_13757
+    - crc16genibus: CRC16_GENIBUS
+    - crc16kermit: CRC16_KERMIT, CRC-16/CCITT, CRC-16/CCITT-TRUE, CRC-16/V-41-LSB, CRC-CCITT
+    - crc16maxim: CRC16_MAXIM
+    - crc16mcrf4xx: CRC16_MCRF4XX
+    - crc16modbus: CRC16_MODBUS
+    - crc16riello: CRC16_RIELLO
+    - crc16t10dif: CRC16_T10_DIF
+    - crc16teledisk: CRC16_TELEDISK
+    - crc16tms37157: CRC16_TMS37157
+    - crc16usb: CRC16_USB
+    - crc16x25: CRC16_X_25
+    - crc16xmodem: CRC16_XMODEM
   - crc32
-  - crc32bzip2
-  - crc32c
-  - crc32d
-  - crc32jamcrc
-  - crc32mpeg2
-  - crc32posix
-  - crc32q
-  - crc32sata
-  - crc32xfer
+    - crc32: CRC32
+    - crc32bzip2: CRC32_BZIP2
+    - crc32c: CRC32_C
+    - crc32d: CRC32_D
+    - crc32jamcrc: CRC32_JAMCRC
+    - crc32mpeg2: CRC32_MPEG2
+    - crc32posix: CRC32_POSIX
+    - crc32q: CRC32_Q
+    - crc32sata: CRC32_SATA
+    - crc32xfer: CRC32_XFER
 
 ## Installation
 
@@ -75,10 +91,12 @@ Once the package is installed, you can import the library using import or requir
 
 ```js
 // import
+import crc8 from '@taichunmin/crc/crc8'
 import crc16a from '@taichunmin/crc/crc16a'
 import crc32 from '@taichunmin/crc/crc32'
 
 // require
+const crc8 = require('@taichunmin/crc/crc8')
 const crc16a = require('@taichunmin/crc/crc16a')
 const crc32 = require('@taichunmin/crc/crc32')
 ```
@@ -96,12 +114,14 @@ Using jsDelivr CDN:
 
 <!-- module -->
 <script type="module">
+  import crc8 from 'https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc8.mjs/+esm'
   import crc16a from 'https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc16a.mjs/+esm'
   import crc32 from 'https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32.mjs/+esm'
 </script>
 
-<!-- module + async import -->
+<!-- module + async import (can be used in DevTools) -->
 <script type="module">
+  const { default: crc8 } = await import('https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc8.mjs/+esm')
   const { default: crc16a } = await import('https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc16a.mjs/+esm')
   const { default: crc32 } = await import('https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32.mjs/+esm')
 </script>
@@ -168,7 +188,7 @@ value.toString(16)
   // "3610a686"
 </script>
 
-<!-- module + import (devtools) -->
+<!-- module + import (can be used in DevTools) -->
 <script type="module">
   const { default: crc32 } = await import('https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32.mjs/+esm')
   crc32(new Uint8Array([0x68, 0x65, 0x6C, 0x6C, 0x6F])).toString(16)
@@ -185,3 +205,5 @@ value.toString(16)
 - <https://github.com/alexgorbatchev/crc>
 - <https://github.com/overcat/fastcrc>
 - <https://github.com/taichunmin/proxmark3.js/blob/master/src/crc16.js>
+- <https://github.com/ratriches/crc/blob/main/src/crcCalc.js>
+- <https://blog.csdn.net/lianyunyouyou/article/details/107217125>
