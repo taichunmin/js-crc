@@ -45,6 +45,8 @@ const POLY_TABLE = new Uint16Array([
   0x1E73, 0x2316, 0x64B9, 0x59DC, 0xEBE7, 0xD682, 0x912D, 0xAC48,
 ])
 
+const u16 = new Uint16Array(1)
+
 /**
  * - poly: 0x3D65
  * - initial: 0x0000
@@ -53,7 +55,7 @@ const POLY_TABLE = new Uint16Array([
  * - refout: false
  */
 export default function crc16en13757 (buf: Uint8Array = new Uint8Array(), prev: number = 0xFFFF): number {
-  let crc = prev ^ 0xFFFF // revert of refout and xorout
-  for (const u8 of buf) crc = ((crc & 0xFF) << 8) ^ POLY_TABLE[(crc >>> 8) ^ u8]
-  return crc ^ 0xFFFF
+  u16[0] = prev ^ 0xFFFF // revert of refout and xorout
+  for (const b of buf) u16[0] = POLY_TABLE[(u16[0] >>> 8) ^ b] ^ (u16[0] << 8)
+  return u16[0] ^ 0xFFFF
 }

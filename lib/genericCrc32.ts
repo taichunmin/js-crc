@@ -1,10 +1,10 @@
-import { i32ToHex, reflect } from './utils'
+import { u32ToHex, reflect } from './utils'
 
 export class GenericCrc32 {
   name: string
-  readonly #i32 = new Int32Array(1)
+  readonly #u32 = new Uint32Array(1)
   readonly #initial: number
-  readonly #poly = new Int32Array(256)
+  readonly #poly = new Uint32Array(256)
   readonly #refin: boolean
   readonly #refout: boolean
   readonly #xorout: number
@@ -26,26 +26,26 @@ export class GenericCrc32 {
   }
 
   buildPoly (poly: number): void {
-    const [i32, refin, tbl] = [this.#i32, this.#refin, this.#poly]
+    const [u32, refin, tbl] = [this.#u32, this.#refin, this.#poly]
     for (let i = 0; i < 256; i++) {
-      i32[0] = (refin ? reflect.u8(i) : i) << 24
+      u32[0] = (refin ? reflect.u8(i) : i) << 24
       tbl[i] = 0
       for (let j = 0; j < 8; j++) {
-        tbl[i] = (((tbl[i] ^ i32[0]) & 0x80000000) !== 0 ? poly : 0) ^ (tbl[i] << 1)
-        i32[0] <<= 1
+        tbl[i] = (((tbl[i] ^ u32[0]) & 0x80000000) !== 0 ? poly : 0) ^ (tbl[i] << 1)
+        u32[0] <<= 1
       }
-      if (refin) tbl[i] = reflect.i32(tbl[i])
+      if (refin) tbl[i] = reflect.u32(tbl[i])
     }
   }
 
   dumpPoly (): string {
-    const [i32, tbl] = [this.#i32, this.#poly]
+    const [u32, tbl] = [this.#u32, this.#poly]
     const lines = []
     for (let i = 0; i < 32; i++) {
       const line = []
       for (let j = 0; j < 8; j++) {
-        i32[0] = tbl[i * 8 + j]
-        line.push(i32ToHex(i32[0]))
+        u32[0] = tbl[i * 8 + j]
+        line.push(u32ToHex(u32[0]))
       }
       lines.push(line.join(', ') + ',\n')
     }
@@ -53,16 +53,15 @@ export class GenericCrc32 {
   }
 
   getCrc (buf: Uint8Array): number {
-    const [i32, refin, refout, tbl, xorout] = [this.#i32, this.#refin, this.#refout, this.#poly, this.#xorout]
-    if (refin) {
-      i32[0] = reflect.i32(this.#initial)
-      for (const b of buf) i32[0] = (i32[0] >>> 8) ^ tbl[(i32[0] ^ b) & 0xFF]
-      return (refout ? i32[0] : reflect.i32(i32[0])) ^ xorout
+    const [u32, refout, tbl, xorout] = [this.#u32, this.#refout, this.#poly, this.#xorout]
+    if (refout) {
+      u32[0] = reflect.u32(this.#initial)
+      for (const b of buf) u32[0] = tbl[(u32[0] ^ b) & 0xFF] ^ (u32[0] >>> 8)
     } else {
-      i32[0] = this.#initial
-      for (const b of buf) i32[0] = (i32[0] << 8) ^ tbl[(i32[0] >>> 24) ^ b]
-      return (refout ? reflect.i32(i32[0]) : i32[0]) ^ xorout
+      u32[0] = this.#initial
+      for (const b of buf) u32[0] = tbl[(u32[0] >>> 24) ^ b] ^ (u32[0] << 8)
     }
+    return (u32[0] ^ xorout) >>> 0
   }
 }
 

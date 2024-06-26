@@ -45,6 +45,8 @@ const POLY_TABLE = new Uint16Array([
   0xD24C, 0x72DB, 0x33F5, 0x9362, 0xB1A9, 0x113E, 0x5010, 0xF087,
 ])
 
+const u16 = new Uint16Array(1)
+
 /**
  * - poly: 0xA097
  * - initial: 0x0000
@@ -53,7 +55,7 @@ const POLY_TABLE = new Uint16Array([
  * - refout: false
  */
 export default function crc16teledisk (buf: Uint8Array = new Uint8Array(), prev: number = 0): number {
-  let crc = prev // revert of refout and xorout
-  for (const u8 of buf) crc = ((crc & 0xFF) << 8) ^ POLY_TABLE[(crc >>> 8) ^ u8]
-  return crc
+  u16[0] = prev // revert of refout and xorout
+  for (const b of buf) u16[0] = POLY_TABLE[(u16[0] >>> 8) ^ b] ^ (u16[0] << 8)
+  return u16[0]
 }

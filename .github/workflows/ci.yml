@@ -2,6 +2,12 @@ name: Build docs and npm publish
 
 on:
   workflow_dispatch:
+    inputs:
+      force_purge:
+        default: false
+        description: '強制清除 jsDelivr 快取'
+        required: true
+        type: boolean
   push:
     branches: [ master ]
   pull_request:
@@ -78,6 +84,7 @@ jobs:
       #   uses: actions/deploy-pages@v4
       - name: 發布至 npm
         uses: JS-DevTools/npm-publish@v3
+        id: npm-publish
         with:
           access: public
           token: ${{ secrets.NPM_TOKEN }}
@@ -89,6 +96,7 @@ jobs:
           yarn run -s tsx ./jsdelivrList.ts >> $GITHUB_OUTPUT
           echo 'EOF' >> $GITHUB_OUTPUT
       - name: jsDelivr Purge
+        if: ${{ github.event.inputs.force_purge || steps.npm-publish.outputs.type }}
         uses: egad13/purge-jsdelivr-cache@v1
         with:
           url: |

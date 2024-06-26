@@ -1,4 +1,4 @@
-import { i16ToHex, reflect } from './utils'
+import { u16ToHex, reflect } from './utils'
 
 export class GenericCrc16 {
   name: string
@@ -45,7 +45,7 @@ export class GenericCrc16 {
       const line = []
       for (let j = 0; j < 8; j++) {
         u16[0] = tbl[i * 8 + j]
-        line.push(i16ToHex(u16[0]))
+        line.push(u16ToHex(u16[0]))
       }
       lines.push(line.join(', ') + ',\n')
     }
@@ -53,16 +53,15 @@ export class GenericCrc16 {
   }
 
   getCrc (buf: Uint8Array): number {
-    const [u16, refin, refout, tbl, xorout] = [this.#u16, this.#refin, this.#refout, this.#poly, this.#xorout]
-    if (refin) {
+    const [u16, refout, tbl, xorout] = [this.#u16, this.#refout, this.#poly, this.#xorout]
+    if (refout) {
       u16[0] = reflect.u16(this.#initial)
-      for (const b of buf) u16[0] = (u16[0] >>> 8) ^ tbl[(u16[0] ^ b) & 0xFF]
-      return (refout ? u16[0] : reflect.u16(u16[0])) ^ xorout
+      for (const b of buf) u16[0] = tbl[(u16[0] ^ b) & 0xFF] ^ (u16[0] >>> 8)
     } else {
       u16[0] = this.#initial
-      for (const b of buf) u16[0] = (u16[0] << 8) ^ tbl[(u16[0] >>> 8) ^ b]
-      return (refout ? reflect.u16(u16[0]) : u16[0]) ^ xorout
+      for (const b of buf) u16[0] = tbl[(u16[0] >>> 8) ^ b] ^ (u16[0] << 8)
     }
+    return u16[0] ^ xorout
   }
 }
 

@@ -10,7 +10,7 @@
  * })()
  * ```
  */
-const POLY_TABLE = new Int32Array([
+const POLY_TABLE = new Uint32Array([
   0x00000000, 0x2BDDD04F, 0x57BBA09E, 0x7C6670D1, 0xAF77413C, 0x84AA9173, 0xF8CCE1A2, 0xD31131ED,
   0xF6DD1A53, 0xDD00CA1C, 0xA166BACD, 0x8ABB6A82, 0x59AA5B6F, 0x72778B20, 0x0E11FBF1, 0x25CC2BBE,
   0x4589AC8D, 0x6E547CC2, 0x12320C13, 0x39EFDC5C, 0xEAFEEDB1, 0xC1233DFE, 0xBD454D2F, 0x96989D60,
@@ -45,6 +45,8 @@ const POLY_TABLE = new Int32Array([
   0x524B09CE, 0x7996D981, 0x05F0A950, 0x2E2D791F, 0xFD3C48F2, 0xD6E198BD, 0xAA87E86C, 0x815A3823,
 ])
 
+const u32 = new Uint32Array(1)
+
 /**
  * - poly: 0xA833982B
  * - initial: 0xFFFFFFFF
@@ -53,7 +55,7 @@ const POLY_TABLE = new Int32Array([
  * - refout: true
  */
 export default function crc32d (buf: Uint8Array = new Uint8Array(), prev: number = 0): number {
-  let crc = prev ^ -1 // revert of refout and xorout
-  for (const u8 of buf) crc = (crc >>> 8) ^ POLY_TABLE[(crc ^ u8) & 0xFF]
-  return crc ^ -1
+  u32[0] = prev ^ -1 // revert of refout and xorout
+  for (const b of buf) u32[0] = POLY_TABLE[(u32[0] ^ b) & 0xFF] ^ (u32[0] >>> 8)
+  return (u32[0] ^ -1) >>> 0
 }

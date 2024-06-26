@@ -11,7 +11,7 @@ test.each([
   { crc: 'E3069283', hex: '313233343536373839' },
 ])('crc32c(Buffer.from("$hex", "hex")) = 0x$crc', ({ hex, crc }) => {
   const u8arr = hex === '' ? undefined : hexToU8Arr(hex)
-  expect(crc32c(u8arr)).toBe(~~parseInt(crc, 16))
+  expect(crc32c(u8arr)).toBe(parseInt(crc, 16))
 })
 
 test.each([
@@ -20,5 +20,5 @@ test.each([
 ])('crc32c(Buffer.from("$hex", "hex")) = 0x$crc', ({ hex, crc }) => {
   const u8arr = hexToU8Arr(hex)
   const prev = crc32c(u8arr.subarray(0, 1))
-  expect(crc32c(u8arr.subarray(1), prev)).toBe(~~parseInt(crc, 16))
+  expect(crc32c(u8arr.subarray(1), prev)).toBe(parseInt(crc, 16))
 })

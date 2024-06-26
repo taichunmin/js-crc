@@ -11,7 +11,7 @@ test.each([
   { crc: 'FC891918', hex: '313233343536373839' },
 ])('crc32bzip2(Buffer.from("$hex", "hex")) = 0x$crc', ({ hex, crc }) => {
   const u8arr = hex === '' ? undefined : hexToU8Arr(hex)
-  expect(crc32bzip2(u8arr)).toBe(~~parseInt(crc, 16))
+  expect(crc32bzip2(u8arr)).toBe(parseInt(crc, 16))
 })
 
 test.each([
@@ -20,5 +20,5 @@ test.each([
 ])('crc32bzip2(Buffer.from("$hex", "hex"), prev) = 0x$crc', ({ hex, crc }) => {
   const u8arr = hexToU8Arr(hex)
   const prev = crc32bzip2(u8arr.subarray(0, 1))
-  expect(crc32bzip2(u8arr.subarray(1), prev)).toBe(~~parseInt(crc, 16))
+  expect(crc32bzip2(u8arr.subarray(1), prev)).toBe(parseInt(crc, 16))
 })

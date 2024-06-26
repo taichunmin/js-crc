@@ -180,6 +180,7 @@ value.toString(16)
 
 - <https://crccalc.com/>
 - <http://www.sunshine2k.de/coding/javascript/crc/crc_js.html> [(Backup)](https://gist.github.com/taichunmin/92fa001f139e5a73f5127d9389123d78)
+- <https://github.com/Fabio286/easy-crc>
 - <https://github.com/mrhooray/crc-rs>
 - <https://github.com/alexgorbatchev/crc>
 - <https://github.com/overcat/fastcrc>

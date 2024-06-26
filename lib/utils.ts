@@ -18,17 +18,17 @@ class Reflect {
     return this.u8(u16) << 8 | this.u8(u16 >>> 8)
   }
 
-  i32 (i32: number): number {
-    return this.u16(i32) << 16 | this.u16(i32 >>> 16)
+  u32 (u32: number): number {
+    return (this.u16(u32) << 16 | this.u16(u32 >>> 16)) >>> 0
   }
 }
 
 export const reflect = new Reflect()
 
-export function i32ToHex (i32: number): string {
+export function u32ToHex (i32: number): string {
   return '0x' + `0000000${(i32 >>> 0).toString(16).toUpperCase()}`.slice(-8)
 }
 
-export function i16ToHex (i16: number): string {
+export function u16ToHex (i16: number): string {
   return '0x' + `000${(i16 & 0xFFFF).toString(16).toUpperCase()}`.slice(-4)
 }

@@ -45,6 +45,8 @@ const POLY_TABLE = new Uint16Array([
   0x8201, 0x42C0, 0x4380, 0x8341, 0x4100, 0x81C1, 0x8081, 0x4040,
 ])
 
+const u16 = new Uint16Array(1)
+
 /**
  * - poly: 0x8005
  * - initial: 0xFFFF
@@ -53,7 +55,7 @@ const POLY_TABLE = new Uint16Array([
  * - refout: true
  */
 export default function crc16modbus (buf: Uint8Array = new Uint8Array(), prev: number = 0xFFFF): number {
-  let crc = prev // revert of refout and xorout
-  for (const u8 of buf) crc = (crc >>> 8) ^ POLY_TABLE[(crc ^ u8) & 0xFF]
-  return crc
+  u16[0] = prev // revert of refout and xorout
+  for (const b of buf) u16[0] = POLY_TABLE[(u16[0] ^ b) & 0xFF] ^ (u16[0] >>> 8)
+  return u16[0]
 }
