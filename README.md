@@ -1,6 +1,21 @@
-# @taichunmin/crc
+<div align="center">
 
-A cross platform alternative for calculating Cyclic Redundancy Checks (CRC) values.
+<h1>@taichunmin/crc</h1>
+
+<p>A cross platform alternative for calculating Cyclic Redundancy Checks (CRC) values.</p>
+
+[![npm version](https://img.shields.io/npm/v/@taichunmin/crc.svg?logo=npm)](https://www.npmjs.org/package/@taichunmin/crc)
+[![jsdelivr hits](https://img.shields.io/jsdelivr/npm/hm/@taichunmin/crc?logo=jsdelivr)](https://www.jsdelivr.com/package/npm/@taichunmin/crc)
+[![Build status](https://img.shields.io/github/actions/workflow/status/taichunmin/js-buffer/ci.yml?branch=master)](https://github.com/taichunmin/js-buffer/actions/workflows/ci.yml)
+[![Coverage Status](https://img.shields.io/coverallsCoverage/github/taichunmin/js-buffer?branch=master)](https://coveralls.io/github/taichunmin/js-buffer?branch=master)
+[![install size](https://img.shields.io/badge/dynamic/json?url=https://packagephobia.com/v2/api.json?p=@taichunmin%2Fbuffer&query=$.install.pretty&label=install%20size)](https://packagephobia.now.sh/result?p=@taichunmin%2Fbuffer)
+[![npm bundle size](https://img.shields.io/bundlephobia/minzip/@taichunmin/crc)](https://bundlephobia.com/package/@taichunmin/crc@latest)
+[![npm downloads](https://img.shields.io/npm/dm/@taichunmin/crc.svg)](https://npm-stat.com/charts.html?package=@taichunmin%2Fbuffer)
+[![GitHub contributors](https://img.shields.io/github/contributors/taichunmin/js-buffer)](https://github.com/taichunmin/js-buffer/graphs/contributors)
+[![Known vulnerabilities](https://snyk.io/test/npm/@taichunmin/crc/badge.svg)](https://snyk.io/test/npm/@taichunmin/crc)
+[![MIT License](https://img.shields.io/github/license/taichunmin/js-buffer)](https://github.com/taichunmin/js-buffer/blob/master/LICENSE)
+
+</div>
 
 ## Features
 
@@ -104,7 +119,7 @@ crc32(new Uint8Array([0x68, 0x65, 0x6C, 0x6C, 0x6F])).toString(16)
 // "3610a686"
 ```
 
-Using TextEncoder to encode UTF-8 string to Uint8Array:
+Using `TextEncoder` to encode UTF-8 string to `Uint8Array`:
 
 ```js
 import crc32 from '@taichunmin/crc/crc32'
@@ -112,7 +127,7 @@ crc32(new TextEncoder('utf-8').encode('hello')).toString(16)
 // "3610a686"
 ```
 
-Or using a Buffer:
+Or using a `Buffer`:
 
 ```js
 import crc32 from '@taichunmin/crc/crc32'
@@ -138,19 +153,27 @@ value.toString(16)
 ### Browser
 
 ```html
+<!-- script -->
+<script src="https://cdn.jsdelivr.net/npm/@taichunmin/crc@0"></script>
+<script>
+  const { crc32 } = window?.taichunmin?.crc
+  crc32(new Uint8Array([0x68, 0x65, 0x6C, 0x6C, 0x6F])).toString(16)
+  // "3610a686"
+</script>
+
+<!-- module -->
 <script type="module">
   import crc32 from 'https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32.mjs/+esm'
   crc32(new Uint8Array([0x68, 0x65, 0x6C, 0x6C, 0x6F])).toString(16)
   // "3610a686"
 </script>
-```
 
-### Browser Devtools
-
-```js
-const { default: crc32 } = await import('https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32.mjs/+esm')
-crc32(new Uint8Array([0x68, 0x65, 0x6C, 0x6C, 0x6F])).toString(16)
-// "3610a686"
+<!-- module + import (devtools) -->
+<script type="module">
+  const { default: crc32 } = await import('https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32.mjs/+esm')
+  crc32(new Uint8Array([0x68, 0x65, 0x6C, 0x6C, 0x6F])).toString(16)
+  // "3610a686"
+</script>
 ```
 
 ## References
