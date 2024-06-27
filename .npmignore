@@ -133,4 +133,6 @@ out
 .github
 *.config.js
 *.config.ts
+*.test.ts
+jsdelivrList.ts
 tsconfig.json
