@@ -76,6 +76,18 @@ describe('crc16cdma2000', () => {
   })
 })
 
+describe('crc16cms', () => {
+  test.each([
+    { crc: 'FFFF', hex: '' },
+    { crc: '7DA7', hex: '31' },
+    { crc: '64A5', hex: '48656C6C6F20576F726C6421' },
+    { crc: 'AEE7', hex: '313233343536373839' },
+  ])('#getCrc(Buffer.from("$hex", "hex")) = 0x$crc', ({ hex, crc }) => {
+    const u8arr = hexToU8Arr(hex)
+    expect(sut.crc16cms.getCrc(u8arr)).toBe(parseInt(crc, 16))
+  })
+})
+
 describe('crc16dds110', () => {
   test.each([
     { crc: '800D', hex: '' },
@@ -148,6 +160,30 @@ describe('crc16genibus', () => {
   })
 })
 
+describe('crc16gsm', () => {
+  test.each([
+    { crc: 'FFFF', hex: '' },
+    { crc: 'D98D', hex: '31' },
+    { crc: 'F32C', hex: '48656C6C6F20576F726C6421' },
+    { crc: 'CE3C', hex: '313233343536373839' },
+  ])('#getCrc(Buffer.from("$hex", "hex")) = 0x$crc', ({ hex, crc }) => {
+    const u8arr = hexToU8Arr(hex)
+    expect(sut.crc16gsm.getCrc(u8arr)).toBe(parseInt(crc, 16))
+  })
+})
+
+describe('crc16iclass', () => {
+  test.each([
+    { crc: 'EBD1', hex: '' },
+    { crc: '18BA', hex: '31' },
+    { crc: 'CA51', hex: '48656C6C6F20576F726C6421' },
+    { crc: '56C7', hex: '313233343536373839' },
+  ])('#getCrc(Buffer.from("$hex", "hex")) = 0x$crc', ({ hex, crc }) => {
+    const u8arr = hexToU8Arr(hex)
+    expect(sut.crc16iclass.getCrc(u8arr)).toBe(parseInt(crc, 16))
+  })
+})
+
 describe('crc16kermit', () => {
   test.each([
     { crc: '0000', hex: '' },
@@ -157,6 +193,30 @@ describe('crc16kermit', () => {
   ])('#getCrc(Buffer.from("$hex", "hex")) = 0x$crc', ({ hex, crc }) => {
     const u8arr = hexToU8Arr(hex)
     expect(sut.crc16kermit.getCrc(u8arr)).toBe(parseInt(crc, 16))
+  })
+})
+
+describe('crc16lj1200', () => {
+  test.each([
+    { crc: '0000', hex: '' },
+    { crc: '0E2B', hex: '31' },
+    { crc: 'F77A', hex: '48656C6C6F20576F726C6421' },
+    { crc: 'BDF4', hex: '313233343536373839' },
+  ])('#getCrc(Buffer.from("$hex", "hex")) = 0x$crc', ({ hex, crc }) => {
+    const u8arr = hexToU8Arr(hex)
+    expect(sut.crc16lj1200.getCrc(u8arr)).toBe(parseInt(crc, 16))
+  })
+})
+
+describe('crc16m17', () => {
+  test.each([
+    { crc: 'FFFF', hex: '' },
+    { crc: '5498', hex: '31' },
+    { crc: '835A', hex: '48656C6C6F20576F726C6421' },
+    { crc: '772B', hex: '313233343536373839' },
+  ])('#getCrc(Buffer.from("$hex", "hex")) = 0x$crc', ({ hex, crc }) => {
+    const u8arr = hexToU8Arr(hex)
+    expect(sut.crc16m17.getCrc(u8arr)).toBe(parseInt(crc, 16))
   })
 })
 
@@ -193,6 +253,66 @@ describe('crc16modbus', () => {
   ])('#getCrc(Buffer.from("$hex", "hex")) = 0x$crc', ({ hex, crc }) => {
     const u8arr = hexToU8Arr(hex)
     expect(sut.crc16modbus.getCrc(u8arr)).toBe(parseInt(crc, 16))
+  })
+})
+
+describe('crc16nrsc5', () => {
+  test.each([
+    { crc: 'FFFF', hex: '' },
+    { crc: '083E', hex: '31' },
+    { crc: '7554', hex: '48656C6C6F20576F726C6421' },
+    { crc: 'A066', hex: '313233343536373839' },
+  ])('#getCrc(Buffer.from("$hex", "hex")) = 0x$crc', ({ hex, crc }) => {
+    const u8arr = hexToU8Arr(hex)
+    expect(sut.crc16nrsc5.getCrc(u8arr)).toBe(parseInt(crc, 16))
+  })
+})
+
+describe('crc16opensafetya', () => {
+  test.each([
+    { crc: '0000', hex: '' },
+    { crc: '188C', hex: '31' },
+    { crc: '1091', hex: '48656C6C6F20576F726C6421' },
+    { crc: '5D38', hex: '313233343536373839' },
+  ])('#getCrc(Buffer.from("$hex", "hex")) = 0x$crc', ({ hex, crc }) => {
+    const u8arr = hexToU8Arr(hex)
+    expect(sut.crc16opensafetya.getCrc(u8arr)).toBe(parseInt(crc, 16))
+  })
+})
+
+describe('crc16opensafetyb', () => {
+  test.each([
+    { crc: '0000', hex: '' },
+    { crc: 'CBE5', hex: '31' },
+    { crc: '8162', hex: '48656C6C6F20576F726C6421' },
+    { crc: '20FE', hex: '313233343536373839' },
+  ])('#getCrc(Buffer.from("$hex", "hex")) = 0x$crc', ({ hex, crc }) => {
+    const u8arr = hexToU8Arr(hex)
+    expect(sut.crc16opensafetyb.getCrc(u8arr)).toBe(parseInt(crc, 16))
+  })
+})
+
+describe('crc16philips', () => {
+  test.each([
+    { crc: 'C592', hex: '' },
+    { crc: '9754', hex: '31' },
+    { crc: '861C', hex: '48656C6C6F20576F726C6421' },
+    { crc: 'B842', hex: '313233343536373839' },
+  ])('#getCrc(Buffer.from("$hex", "hex")) = 0x$crc', ({ hex, crc }) => {
+    const u8arr = hexToU8Arr(hex)
+    expect(sut.crc16philips.getCrc(u8arr)).toBe(parseInt(crc, 16))
+  })
+})
+
+describe('crc16profibus', () => {
+  test.each([
+    { crc: '0000', hex: '' },
+    { crc: 'C5D2', hex: '31' },
+    { crc: 'D5C0', hex: '48656C6C6F20576F726C6421' },
+    { crc: 'A819', hex: '313233343536373839' },
+  ])('#getCrc(Buffer.from("$hex", "hex")) = 0x$crc', ({ hex, crc }) => {
+    const u8arr = hexToU8Arr(hex)
+    expect(sut.crc16profibus.getCrc(u8arr)).toBe(parseInt(crc, 16))
   })
 })
 
@@ -316,4 +436,52 @@ test('#dumpPoly()', () => {
     '0x7BC7, 0x6A4E, 0x58D5, 0x495C, 0x3DE3, 0x2C6A, 0x1EF1, 0x0F78,\n',
   ]
   expect(sut.crc16a.dumpPoly()).toBe(lines.join(''))
+})
+
+test('exportCrcFn', () => {
+  expect(sut.crc16a.exportCrcFn().trim().length).toBeGreaterThan(0)
+  expect(sut.crc16dectr.exportCrcFn().trim().length).toBeGreaterThan(0)
+})
+
+test('exportTest1', () => {
+  const snapshot = `
+describe('crc16a', () => {
+  test.each([
+    { crc: '6363', hex: '' },
+    { crc: '71F4', hex: '31' },
+    { crc: '4167', hex: '48656C6C6F20576F726C6421' },
+    { crc: 'BF05', hex: '313233343536373839' },
+  ])('#getCrc(Buffer.from("$hex", "hex")) = 0x$crc', ({ hex, crc }) => {
+    const u8arr = hexToU8Arr(hex)
+    expect(sut.crc16a.getCrc(u8arr)).toBe(parseInt(crc, 16))
+  })
+})
+`
+  expect(sut.crc16a.exportTest1().trim()).toBe(snapshot.trim())
+})
+
+test('exportTest2', () => {
+  const snapshot = `
+describe('crc16a', () => {
+  test.each([
+    { crc: '6363', hex: '' },
+    { crc: '71F4', hex: '31' },
+    { crc: '4167', hex: '48656C6C6F20576F726C6421' },
+    { crc: 'BF05', hex: '313233343536373839' },
+  ])('crc16a(Buffer.from("$hex", "hex")) = 0x$crc', ({ hex, crc }) => {
+    const u8arr = hex === '' ? undefined : hexToU8Arr(hex)
+    expect(crc16a(u8arr)).toBe(parseInt(crc, 16))
+  })
+
+  test.each([
+    { crc: '4167', hex: '48656C6C6F20576F726C6421' },
+    { crc: 'BF05', hex: '313233343536373839' },
+  ])('crc16a(Buffer.from("$hex", "hex")) = 0x$crc', ({ hex, crc }) => {
+    const u8arr = hexToU8Arr(hex)
+    const prev = crc16a(u8arr.subarray(0, 1))
+    expect(crc16a(u8arr.subarray(1), prev)).toBe(parseInt(crc, 16))
+  })
+})
+`
+  expect(sut.crc16a.exportTest2().trim()).toBe(snapshot.trim())
 })

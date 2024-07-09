@@ -1,8 +1,11 @@
 import crc32 from './crc32'
+import crc32autosar from './crc32autosar'
 import crc32bzip2 from './crc32bzip2'
 import crc32c from './crc32c'
+import crc32cdromedc from './crc32cdromedc'
 import crc32d from './crc32d'
 import crc32jamcrc from './crc32jamcrc'
+import crc32mef from './crc32mef'
 import crc32mpeg2 from './crc32mpeg2'
 import crc32posix from './crc32posix'
 import crc32q from './crc32q'
@@ -34,6 +37,27 @@ describe('crc32', () => {
   })
 })
 
+describe('crc32autosar', () => {
+  test.each([
+    { crc: '00000000', hex: '' },
+    { crc: '2DE7AF5E', hex: '31' },
+    { crc: '4B1CD472', hex: '48656C6C6F20576F726C6421' },
+    { crc: '1697D06A', hex: '313233343536373839' },
+  ])('crc32autosar(Buffer.from("$hex", "hex")) = 0x$crc', ({ hex, crc }) => {
+    const u8arr = hex === '' ? undefined : hexToU8Arr(hex)
+    expect(crc32autosar(u8arr)).toBe(parseInt(crc, 16))
+  })
+
+  test.each([
+    { crc: '4B1CD472', hex: '48656C6C6F20576F726C6421' },
+    { crc: '1697D06A', hex: '313233343536373839' },
+  ])('crc32autosar(Buffer.from("$hex", "hex")) = 0x$crc', ({ hex, crc }) => {
+    const u8arr = hexToU8Arr(hex)
+    const prev = crc32autosar(u8arr.subarray(0, 1))
+    expect(crc32autosar(u8arr.subarray(1), prev)).toBe(parseInt(crc, 16))
+  })
+})
+
 describe('crc32bzip2', () => {
   test.each([
     { crc: '00000000', hex: '' },
@@ -48,7 +72,7 @@ describe('crc32bzip2', () => {
   test.each([
     { crc: '6B1A7CAE', hex: '48656C6C6F20576F726C6421' },
     { crc: 'FC891918', hex: '313233343536373839' },
-  ])('crc32bzip2(Buffer.from("$hex", "hex"), prev) = 0x$crc', ({ hex, crc }) => {
+  ])('crc32bzip2(Buffer.from("$hex", "hex")) = 0x$crc', ({ hex, crc }) => {
     const u8arr = hexToU8Arr(hex)
     const prev = crc32bzip2(u8arr.subarray(0, 1))
     expect(crc32bzip2(u8arr.subarray(1), prev)).toBe(parseInt(crc, 16))
@@ -73,6 +97,27 @@ describe('crc32c', () => {
     const u8arr = hexToU8Arr(hex)
     const prev = crc32c(u8arr.subarray(0, 1))
     expect(crc32c(u8arr.subarray(1), prev)).toBe(parseInt(crc, 16))
+  })
+})
+
+describe('crc32cdromedc', () => {
+  test.each([
+    { crc: '00000000', hex: '' },
+    { crc: '8B913101', hex: '31' },
+    { crc: 'F9058BB0', hex: '48656C6C6F20576F726C6421' },
+    { crc: '6EC2EDC4', hex: '313233343536373839' },
+  ])('crc32cdromedc(Buffer.from("$hex", "hex")) = 0x$crc', ({ hex, crc }) => {
+    const u8arr = hex === '' ? undefined : hexToU8Arr(hex)
+    expect(crc32cdromedc(u8arr)).toBe(parseInt(crc, 16))
+  })
+
+  test.each([
+    { crc: 'F9058BB0', hex: '48656C6C6F20576F726C6421' },
+    { crc: '6EC2EDC4', hex: '313233343536373839' },
+  ])('crc32cdromedc(Buffer.from("$hex", "hex")) = 0x$crc', ({ hex, crc }) => {
+    const u8arr = hexToU8Arr(hex)
+    const prev = crc32cdromedc(u8arr.subarray(0, 1))
+    expect(crc32cdromedc(u8arr.subarray(1), prev)).toBe(parseInt(crc, 16))
   })
 })
 
@@ -111,10 +156,31 @@ describe('crc32jamcrc', () => {
   test.each([
     { crc: 'E3D6E35C', hex: '48656C6C6F20576F726C6421' },
     { crc: '340BC6D9', hex: '313233343536373839' },
-  ])('crc32jamcrc(Buffer.from("$hex", "hex"), prev) = 0x$crc', ({ hex, crc }) => {
+  ])('crc32jamcrc(Buffer.from("$hex", "hex")) = 0x$crc', ({ hex, crc }) => {
     const u8arr = hexToU8Arr(hex)
     const prev = crc32jamcrc(u8arr.subarray(0, 1))
     expect(crc32jamcrc(u8arr.subarray(1), prev)).toBe(parseInt(crc, 16))
+  })
+})
+
+describe('crc32mef', () => {
+  test.each([
+    { crc: 'FFFFFFFF', hex: '' },
+    { crc: '040AB65E', hex: '31' },
+    { crc: '97E5CD47', hex: '48656C6C6F20576F726C6421' },
+    { crc: 'D2C22F51', hex: '313233343536373839' },
+  ])('crc32mef(Buffer.from("$hex", "hex")) = 0x$crc', ({ hex, crc }) => {
+    const u8arr = hex === '' ? undefined : hexToU8Arr(hex)
+    expect(crc32mef(u8arr)).toBe(parseInt(crc, 16))
+  })
+
+  test.each([
+    { crc: '97E5CD47', hex: '48656C6C6F20576F726C6421' },
+    { crc: 'D2C22F51', hex: '313233343536373839' },
+  ])('crc32mef(Buffer.from("$hex", "hex")) = 0x$crc', ({ hex, crc }) => {
+    const u8arr = hexToU8Arr(hex)
+    const prev = crc32mef(u8arr.subarray(0, 1))
+    expect(crc32mef(u8arr.subarray(1), prev)).toBe(parseInt(crc, 16))
   })
 })
 

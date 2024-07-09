@@ -24,54 +24,75 @@
 - Pure JavaScript implementation, no dependencies.
 - Supported CRC algorithms:
   - crc8
-    - crc8: CRC8
-    - crc8autosar: CRC8_8H2F, CRC8_AUTOSAR
-    - crc8cdma2000: CRC8_CDMA2000
-    - crc8darc: CRC8_DARC
-    - crc8dvbs2: CRC8_DVB_S2
-    - crc8ebu: CRC8_EBU
-    - crc8icode: CRC8_ICODE
-    - crc8itu: CRC8_ITU
-    - crc8maxim: CRC8_MAXIM
-    - crc8rohc: CRC8_ROHC
-    - crc8saej1850: CRC8_SAE_J1850
-    - crc8saej1850zero: CRC8_SAE_J1850_ZERO
-    - crc8wcdma: CRC8_WCDMA
+    - crc8: CRC8, CRC8/SMBUS
+    - crc8autosar: CRC8/8H2F, CRC8/AUTOSAR
+    - crc8bluetooth: CRC8/BLUETOOTH
+    - crc8cardx: CRC8/CARDX
+    - crc8cdma2000: CRC8/CDMA2000
+    - crc8darc: CRC8/DARC
+    - crc8dvbs2: CRC8/DVB-S2
+    - crc8ebu: CRC8/AES, CRC8/EBU, CRC8/TECH-3250
+    - crc8gsma: CRC8/GSM-A
+    - crc8gsmb: CRC8/GSM-B
+    - crc8hitag: CRC8/HITAG
+    - crc8icode: CRC8/I-CODE
+    - crc8itu: CRC8/ITU, CRC8/I-432-1
+    - crc8legic: CRC8/LEGIC
+    - crc8mad: CRC8/MAD, CRC8/MIFARE-MAD
+    - crc8maxim: CRC8/DOW-CRC, CRC8/MAXIM, CRC8/MAXIM-DOW
+    - crc8nrsc5: CRC8/NRSC-5
+    - crc8opensafety: CRC8/OPENSAFETY
+    - crc8rohc: CRC8/ROHC
+    - crc8saej1850: CRC8/SAE-J1850
+    - crc8wcdma: CRC8/WCDMA, CRC8/LTE
   - crc16
-    - crc16a: CRC16_A
-    - crc16arc: CRC16_ARC, CRC16_IBM
-    - crc16augccitt: CRC16_AUG_CCITT
-    - crc16buypass: CRC16_BUYPASS
-    - crc16ccittfalse: CRC16_CCITT_FALSE
-    - crc16cdma2000: CRC16_CDMA2000
-    - crc16dds110: CRC16_DDS_110
-    - crc16dectr: CRC16_DECT_R
-    - crc16dectx: CRC16_DECT_X
-    - crc16dnp: CRC16_DNP
-    - crc16en13757: CRC16_EN_13757
-    - crc16genibus: CRC16_GENIBUS
-    - crc16kermit: CRC16_KERMIT, CRC-16/CCITT, CRC-16/CCITT-TRUE, CRC-16/V-41-LSB, CRC-CCITT
-    - crc16maxim: CRC16_MAXIM
-    - crc16mcrf4xx: CRC16_MCRF4XX
-    - crc16modbus: CRC16_MODBUS
-    - crc16riello: CRC16_RIELLO
-    - crc16t10dif: CRC16_T10_DIF
-    - crc16teledisk: CRC16_TELEDISK
-    - crc16tms37157: CRC16_TMS37157
-    - crc16usb: CRC16_USB
-    - crc16x25: CRC16_X_25
-    - crc16xmodem: CRC16_XMODEM
+    - crc16a: CRC16/A
+    - crc16arc: CRC16, CRC16/ARC, CRC16/IBM, CRC16/LHA
+    - crc16augccitt: CRC16/AUG-CCITT, CRC16/SPI-FUJITSU
+    - crc16buypass: CRC16/BUYPASS, CRC16/UMTS, CRC16/VERIFONE
+    - crc16ccittfalse: CRC16/AUTOSAR, CRC16/CCITT-FALSE, CRC16/IBM-3740
+    - crc16cdma2000: CRC16/CDMA2000
+    - crc16cms: CRC16/CMS
+    - crc16dds110: CRC16/DDS-110
+    - crc16dectr: CRC16/DECT-R, CRC16/R-CRC-16
+    - crc16dectx: CRC16/DECT-X, CRC16/X-CRC-16
+    - crc16dnp: CRC16/DNP
+    - crc16en13757: CRC16/EN-13757
+    - crc16genibus: CRC16/DARC, CRC16/EPC, CRC16/EPC-C1G2, CRC16/GENIBUS, CRC16/I-CODE
+    - crc16gsm: CRC16/GSM
+    - crc16iclass: CRC16/ICLASS
+    - crc16kermit: CRC16/BLUETOOTH, CRC16/CCITT, CRC16/CCITT-TRUE, CRC16/CCITT-TRUE, CRC16/KERMIT, CRC16/V-41-LSB, CRC16/V-41-LSB
+    - crc16lj1200: CRC16/LJ1200
+    - crc16m17: CRC16/M17
+    - crc16maxim: CRC16/MAXIM, CRC16/MAXIM-DOW
+    - crc16mcrf4xx: CRC16/MCRF4XX
+    - crc16modbus: CRC16/MODBUS
+    - crc16nrsc5: CRC16/NRSC-5
+    - crc16opensafetya: CRC16/OPENSAFETY-A
+    - crc16opensafetyb: CRC16/OPENSAFETY-B
+    - crc16philips: CRC16/PHILIPS
+    - crc16profibus: CRC16/PROFIBUS
+    - crc16riello: CRC16/RIELLO
+    - crc16t10dif: CRC16/T10_DIF
+    - crc16teledisk: CRC16/TELEDISK
+    - crc16tms37157: CRC16/TMS37157
+    - crc16usb: CRC16/USB
+    - crc16x25: CRC16/B, CRC16/IBM-SDLC, CRC16/ISO-HDLC, CRC16/ISO-IEC-14443-3-B, CRC16/X-25
+    - crc16xmodem: CRC16/ACORN, CRC16/LTE, CRC16/V-41-MSB, CRC16/XMODEM, CRC16/ZMODEM
   - crc32
-    - crc32: CRC32
-    - crc32bzip2: CRC32_BZIP2
-    - crc32c: CRC32_C
-    - crc32d: CRC32_D
-    - crc32jamcrc: CRC32_JAMCRC
-    - crc32mpeg2: CRC32_MPEG2
-    - crc32posix: CRC32_POSIX
-    - crc32q: CRC32_Q
-    - crc32sata: CRC32_SATA
-    - crc32xfer: CRC32_XFER
+    - crc32: CRC32, CRC32/ADCCP, CRC32/PKZIP, CRC32/V-42, CRC32/XZ
+    - crc32autosar: CRC32/AUTOSAR
+    - crc32bzip2: CRC32/AAL5, CRC32/BZIP2, CRC32/DECT-B
+    - crc32c: CRC32/BASE91-C, CRC32/C, CRC32/CASTAGNOLI, CRC32/INTERLAKEN
+    - crc32cdromedc: CRC32/CD-ROM-EDC
+    - crc32d: CRC32/D, CRC32/BASE91-D
+    - crc32jamcrc: CRC32/JAMCRC
+    - crc32mef: CRC32/MEF
+    - crc32mpeg2: CRC32/MPEG2
+    - crc32posix: CRC32/CKSUM, CRC32/POSIX
+    - crc32q: CRC32/AIXM, CRC32/Q
+    - crc32sata: CRC32/SATA
+    - crc32xfer: CRC32/XFER
 
 ## Installation
 
@@ -200,6 +221,8 @@ value.toString(16)
 
 - <https://crccalc.com/>
 - <http://www.sunshine2k.de/coding/javascript/crc/crc_js.html> [(Backup)](https://gist.github.com/taichunmin/92fa001f139e5a73f5127d9389123d78)
+- <https://reveng.sourceforge.io/crc-catalogue/>
+- <https://pypi.org/project/crccheck/>
 - <https://github.com/Fabio286/easy-crc>
 - <https://github.com/mrhooray/crc-rs>
 - <https://github.com/alexgorbatchev/crc>

@@ -1,15 +1,23 @@
 import crc8 from './crc8'
 import crc8autosar from './crc8autosar'
+import crc8bluetooth from './crc8bluetooth'
+import crc8cardx from './crc8cardx'
 import crc8cdma2000 from './crc8cdma2000'
 import crc8darc from './crc8darc'
 import crc8dvbs2 from './crc8dvbs2'
 import crc8ebu from './crc8ebu'
+import crc8gsma from './crc8gsma'
+import crc8gsmb from './crc8gsmb'
+import crc8hitag from './crc8hitag'
 import crc8icode from './crc8icode'
 import crc8itu from './crc8itu'
+import crc8legic from './crc8legic'
+import crc8mad from './crc8mad'
 import crc8maxim from './crc8maxim'
+import crc8nrsc5 from './crc8nrsc5'
+import crc8opensafety from './crc8opensafety'
 import crc8rohc from './crc8rohc'
 import crc8saej1850 from './crc8saej1850'
-import crc8saej1850zero from './crc8saej1850zero'
 import crc8wcdma from './crc8wcdma'
 
 function hexToU8Arr (hex: string): Uint8Array {
@@ -23,7 +31,7 @@ describe('crc8', () => {
     { crc: '1C', hex: '48656C6C6F20576F726C6421' },
     { crc: 'F4', hex: '313233343536373839' },
   ])('#getCrc(Buffer.from("$hex", "hex")) = 0x$crc', ({ hex, crc }) => {
-    const u8arr = hexToU8Arr(hex)
+    const u8arr = hex === '' ? undefined : hexToU8Arr(hex)
     expect(crc8(u8arr)).toBe(parseInt(crc, 16))
   })
 
@@ -44,7 +52,7 @@ describe('crc8autosar', () => {
     { crc: '37', hex: '48656C6C6F20576F726C6421' },
     { crc: 'DF', hex: '313233343536373839' },
   ])('#getCrc(Buffer.from("$hex", "hex")) = 0x$crc', ({ hex, crc }) => {
-    const u8arr = hexToU8Arr(hex)
+    const u8arr = hex === '' ? undefined : hexToU8Arr(hex)
     expect(crc8autosar(u8arr)).toBe(parseInt(crc, 16))
   })
 
@@ -58,6 +66,48 @@ describe('crc8autosar', () => {
   })
 })
 
+describe('crc8bluetooth', () => {
+  test.each([
+    { crc: '00', hex: '' },
+    { crc: '92', hex: '31' },
+    { crc: '51', hex: '48656C6C6F20576F726C6421' },
+    { crc: '26', hex: '313233343536373839' },
+  ])('#getCrc(Buffer.from("$hex", "hex")) = 0x$crc', ({ hex, crc }) => {
+    const u8arr = hex === '' ? undefined : hexToU8Arr(hex)
+    expect(crc8bluetooth(u8arr)).toBe(parseInt(crc, 16))
+  })
+
+  test.each([
+    { crc: '51', hex: '48656C6C6F20576F726C6421' },
+    { crc: '26', hex: '313233343536373839' },
+  ])('#getCrc(Buffer.from("$hex", "hex")) = 0x$crc', ({ hex, crc }) => {
+    const u8arr = hexToU8Arr(hex)
+    const prev = crc8bluetooth(u8arr.subarray(0, 1))
+    expect(crc8bluetooth(u8arr.subarray(1), prev)).toBe(parseInt(crc, 16))
+  })
+})
+
+describe('crc8cardx', () => {
+  test.each([
+    { crc: '2C', hex: '' },
+    { crc: '53', hex: '31' },
+    { crc: '18', hex: '48656C6C6F20576F726C6421' },
+    { crc: 'DB', hex: '313233343536373839' },
+  ])('#getCrc(Buffer.from("$hex", "hex")) = 0x$crc', ({ hex, crc }) => {
+    const u8arr = hex === '' ? undefined : hexToU8Arr(hex)
+    expect(crc8cardx(u8arr)).toBe(parseInt(crc, 16))
+  })
+
+  test.each([
+    { crc: '18', hex: '48656C6C6F20576F726C6421' },
+    { crc: 'DB', hex: '313233343536373839' },
+  ])('#getCrc(Buffer.from("$hex", "hex")) = 0x$crc', ({ hex, crc }) => {
+    const u8arr = hexToU8Arr(hex)
+    const prev = crc8cardx(u8arr.subarray(0, 1))
+    expect(crc8cardx(u8arr.subarray(1), prev)).toBe(parseInt(crc, 16))
+  })
+})
+
 describe('crc8cdma2000', () => {
   test.each([
     { crc: 'FF', hex: '' },
@@ -65,7 +115,7 @@ describe('crc8cdma2000', () => {
     { crc: '23', hex: '48656C6C6F20576F726C6421' },
     { crc: 'DA', hex: '313233343536373839' },
   ])('#getCrc(Buffer.from("$hex", "hex")) = 0x$crc', ({ hex, crc }) => {
-    const u8arr = hexToU8Arr(hex)
+    const u8arr = hex === '' ? undefined : hexToU8Arr(hex)
     expect(crc8cdma2000(u8arr)).toBe(parseInt(crc, 16))
   })
 
@@ -86,7 +136,7 @@ describe('crc8darc', () => {
     { crc: '3E', hex: '48656C6C6F20576F726C6421' },
     { crc: '15', hex: '313233343536373839' },
   ])('#getCrc(Buffer.from("$hex", "hex")) = 0x$crc', ({ hex, crc }) => {
-    const u8arr = hexToU8Arr(hex)
+    const u8arr = hex === '' ? undefined : hexToU8Arr(hex)
     expect(crc8darc(u8arr)).toBe(parseInt(crc, 16))
   })
 
@@ -107,7 +157,7 @@ describe('crc8dvbs2', () => {
     { crc: '29', hex: '48656C6C6F20576F726C6421' },
     { crc: 'BC', hex: '313233343536373839' },
   ])('#getCrc(Buffer.from("$hex", "hex")) = 0x$crc', ({ hex, crc }) => {
-    const u8arr = hexToU8Arr(hex)
+    const u8arr = hex === '' ? undefined : hexToU8Arr(hex)
     expect(crc8dvbs2(u8arr)).toBe(parseInt(crc, 16))
   })
 
@@ -128,7 +178,7 @@ describe('crc8ebu', () => {
     { crc: '07', hex: '48656C6C6F20576F726C6421' },
     { crc: '97', hex: '313233343536373839' },
   ])('#getCrc(Buffer.from("$hex", "hex")) = 0x$crc', ({ hex, crc }) => {
-    const u8arr = hexToU8Arr(hex)
+    const u8arr = hex === '' ? undefined : hexToU8Arr(hex)
     expect(crc8ebu(u8arr)).toBe(parseInt(crc, 16))
   })
 
@@ -142,6 +192,69 @@ describe('crc8ebu', () => {
   })
 })
 
+describe('crc8gsma', () => {
+  test.each([
+    { crc: '00', hex: '' },
+    { crc: '57', hex: '31' },
+    { crc: 'B2', hex: '48656C6C6F20576F726C6421' },
+    { crc: '37', hex: '313233343536373839' },
+  ])('#getCrc(Buffer.from("$hex", "hex")) = 0x$crc', ({ hex, crc }) => {
+    const u8arr = hex === '' ? undefined : hexToU8Arr(hex)
+    expect(crc8gsma(u8arr)).toBe(parseInt(crc, 16))
+  })
+
+  test.each([
+    { crc: 'B2', hex: '48656C6C6F20576F726C6421' },
+    { crc: '37', hex: '313233343536373839' },
+  ])('#getCrc(Buffer.from("$hex", "hex")) = 0x$crc', ({ hex, crc }) => {
+    const u8arr = hexToU8Arr(hex)
+    const prev = crc8gsma(u8arr.subarray(0, 1))
+    expect(crc8gsma(u8arr.subarray(1), prev)).toBe(parseInt(crc, 16))
+  })
+})
+
+describe('crc8gsmb', () => {
+  test.each([
+    { crc: 'FF', hex: '' },
+    { crc: 'F8', hex: '31' },
+    { crc: 'E0', hex: '48656C6C6F20576F726C6421' },
+    { crc: '94', hex: '313233343536373839' },
+  ])('#getCrc(Buffer.from("$hex", "hex")) = 0x$crc', ({ hex, crc }) => {
+    const u8arr = hex === '' ? undefined : hexToU8Arr(hex)
+    expect(crc8gsmb(u8arr)).toBe(parseInt(crc, 16))
+  })
+
+  test.each([
+    { crc: 'E0', hex: '48656C6C6F20576F726C6421' },
+    { crc: '94', hex: '313233343536373839' },
+  ])('#getCrc(Buffer.from("$hex", "hex")) = 0x$crc', ({ hex, crc }) => {
+    const u8arr = hexToU8Arr(hex)
+    const prev = crc8gsmb(u8arr.subarray(0, 1))
+    expect(crc8gsmb(u8arr.subarray(1), prev)).toBe(parseInt(crc, 16))
+  })
+})
+
+describe('crc8hitag', () => {
+  test.each([
+    { crc: 'FF', hex: '' },
+    { crc: '93', hex: '31' },
+    { crc: 'FE', hex: '48656C6C6F20576F726C6421' },
+    { crc: 'B4', hex: '313233343536373839' },
+  ])('#getCrc(Buffer.from("$hex", "hex")) = 0x$crc', ({ hex, crc }) => {
+    const u8arr = hex === '' ? undefined : hexToU8Arr(hex)
+    expect(crc8hitag(u8arr)).toBe(parseInt(crc, 16))
+  })
+
+  test.each([
+    { crc: 'FE', hex: '48656C6C6F20576F726C6421' },
+    { crc: 'B4', hex: '313233343536373839' },
+  ])('#getCrc(Buffer.from("$hex", "hex")) = 0x$crc', ({ hex, crc }) => {
+    const u8arr = hexToU8Arr(hex)
+    const prev = crc8hitag(u8arr.subarray(0, 1))
+    expect(crc8hitag(u8arr.subarray(1), prev)).toBe(parseInt(crc, 16))
+  })
+})
+
 describe('crc8icode', () => {
   test.each([
     { crc: 'FD', hex: '' },
@@ -149,7 +262,7 @@ describe('crc8icode', () => {
     { crc: '51', hex: '48656C6C6F20576F726C6421' },
     { crc: '7E', hex: '313233343536373839' },
   ])('#getCrc(Buffer.from("$hex", "hex")) = 0x$crc', ({ hex, crc }) => {
-    const u8arr = hexToU8Arr(hex)
+    const u8arr = hex === '' ? undefined : hexToU8Arr(hex)
     expect(crc8icode(u8arr)).toBe(parseInt(crc, 16))
   })
 
@@ -170,7 +283,7 @@ describe('crc8itu', () => {
     { crc: '49', hex: '48656C6C6F20576F726C6421' },
     { crc: 'A1', hex: '313233343536373839' },
   ])('#getCrc(Buffer.from("$hex", "hex")) = 0x$crc', ({ hex, crc }) => {
-    const u8arr = hexToU8Arr(hex)
+    const u8arr = hex === '' ? undefined : hexToU8Arr(hex)
     expect(crc8itu(u8arr)).toBe(parseInt(crc, 16))
   })
 
@@ -184,6 +297,48 @@ describe('crc8itu', () => {
   })
 })
 
+describe('crc8legic', () => {
+  test.each([
+    { crc: 'AA', hex: '' },
+    { crc: 'D6', hex: '31' },
+    { crc: 'F1', hex: '48656C6C6F20576F726C6421' },
+    { crc: 'FF', hex: '313233343536373839' },
+  ])('#getCrc(Buffer.from("$hex", "hex")) = 0x$crc', ({ hex, crc }) => {
+    const u8arr = hex === '' ? undefined : hexToU8Arr(hex)
+    expect(crc8legic(u8arr)).toBe(parseInt(crc, 16))
+  })
+
+  test.each([
+    { crc: 'F1', hex: '48656C6C6F20576F726C6421' },
+    { crc: 'FF', hex: '313233343536373839' },
+  ])('#getCrc(Buffer.from("$hex", "hex")) = 0x$crc', ({ hex, crc }) => {
+    const u8arr = hexToU8Arr(hex)
+    const prev = crc8legic(u8arr.subarray(0, 1))
+    expect(crc8legic(u8arr.subarray(1), prev)).toBe(parseInt(crc, 16))
+  })
+})
+
+describe('crc8mad', () => {
+  test.each([
+    { crc: 'C7', hex: '' },
+    { crc: '31', hex: '31' },
+    { crc: '4B', hex: '48656C6C6F20576F726C6421' },
+    { crc: '99', hex: '313233343536373839' },
+  ])('#getCrc(Buffer.from("$hex", "hex")) = 0x$crc', ({ hex, crc }) => {
+    const u8arr = hex === '' ? undefined : hexToU8Arr(hex)
+    expect(crc8mad(u8arr)).toBe(parseInt(crc, 16))
+  })
+
+  test.each([
+    { crc: '4B', hex: '48656C6C6F20576F726C6421' },
+    { crc: '99', hex: '313233343536373839' },
+  ])('#getCrc(Buffer.from("$hex", "hex")) = 0x$crc', ({ hex, crc }) => {
+    const u8arr = hexToU8Arr(hex)
+    const prev = crc8mad(u8arr.subarray(0, 1))
+    expect(crc8mad(u8arr.subarray(1), prev)).toBe(parseInt(crc, 16))
+  })
+})
+
 describe('crc8maxim', () => {
   test.each([
     { crc: '00', hex: '' },
@@ -191,7 +346,7 @@ describe('crc8maxim', () => {
     { crc: '9E', hex: '48656C6C6F20576F726C6421' },
     { crc: 'A1', hex: '313233343536373839' },
   ])('#getCrc(Buffer.from("$hex", "hex")) = 0x$crc', ({ hex, crc }) => {
-    const u8arr = hexToU8Arr(hex)
+    const u8arr = hex === '' ? undefined : hexToU8Arr(hex)
     expect(crc8maxim(u8arr)).toBe(parseInt(crc, 16))
   })
 
@@ -205,6 +360,48 @@ describe('crc8maxim', () => {
   })
 })
 
+describe('crc8nrsc5', () => {
+  test.each([
+    { crc: 'FF', hex: '' },
+    { crc: '58', hex: '31' },
+    { crc: '26', hex: '48656C6C6F20576F726C6421' },
+    { crc: 'F7', hex: '313233343536373839' },
+  ])('#getCrc(Buffer.from("$hex", "hex")) = 0x$crc', ({ hex, crc }) => {
+    const u8arr = hex === '' ? undefined : hexToU8Arr(hex)
+    expect(crc8nrsc5(u8arr)).toBe(parseInt(crc, 16))
+  })
+
+  test.each([
+    { crc: '26', hex: '48656C6C6F20576F726C6421' },
+    { crc: 'F7', hex: '313233343536373839' },
+  ])('#getCrc(Buffer.from("$hex", "hex")) = 0x$crc', ({ hex, crc }) => {
+    const u8arr = hexToU8Arr(hex)
+    const prev = crc8nrsc5(u8arr.subarray(0, 1))
+    expect(crc8nrsc5(u8arr.subarray(1), prev)).toBe(parseInt(crc, 16))
+  })
+})
+
+describe('crc8opensafety', () => {
+  test.each([
+    { crc: '00', hex: '' },
+    { crc: 'F2', hex: '31' },
+    { crc: '7C', hex: '48656C6C6F20576F726C6421' },
+    { crc: '3E', hex: '313233343536373839' },
+  ])('#getCrc(Buffer.from("$hex", "hex")) = 0x$crc', ({ hex, crc }) => {
+    const u8arr = hex === '' ? undefined : hexToU8Arr(hex)
+    expect(crc8opensafety(u8arr)).toBe(parseInt(crc, 16))
+  })
+
+  test.each([
+    { crc: '7C', hex: '48656C6C6F20576F726C6421' },
+    { crc: '3E', hex: '313233343536373839' },
+  ])('#getCrc(Buffer.from("$hex", "hex")) = 0x$crc', ({ hex, crc }) => {
+    const u8arr = hexToU8Arr(hex)
+    const prev = crc8opensafety(u8arr.subarray(0, 1))
+    expect(crc8opensafety(u8arr.subarray(1), prev)).toBe(parseInt(crc, 16))
+  })
+})
+
 describe('crc8rohc', () => {
   test.each([
     { crc: 'FF', hex: '' },
@@ -212,7 +409,7 @@ describe('crc8rohc', () => {
     { crc: '4C', hex: '48656C6C6F20576F726C6421' },
     { crc: 'D0', hex: '313233343536373839' },
   ])('#getCrc(Buffer.from("$hex", "hex")) = 0x$crc', ({ hex, crc }) => {
-    const u8arr = hexToU8Arr(hex)
+    const u8arr = hex === '' ? undefined : hexToU8Arr(hex)
     expect(crc8rohc(u8arr)).toBe(parseInt(crc, 16))
   })
 
@@ -229,44 +426,21 @@ describe('crc8rohc', () => {
 describe('crc8saej1850', () => {
   test.each([
     { crc: '00', hex: '' },
-    { crc: '6c', hex: '31' },
+    { crc: '6C', hex: '31' },
     { crc: '01', hex: '48656C6C6F20576F726C6421' },
     { crc: '4B', hex: '313233343536373839' },
   ])('#getCrc(Buffer.from("$hex", "hex")) = 0x$crc', ({ hex, crc }) => {
-    const u8arr = hexToU8Arr(hex)
+    const u8arr = hex === '' ? undefined : hexToU8Arr(hex)
     expect(crc8saej1850(u8arr)).toBe(parseInt(crc, 16))
   })
 
   test.each([
-    { crc: '00', hex: '' },
-    { crc: '6c', hex: '31' },
     { crc: '01', hex: '48656C6C6F20576F726C6421' },
     { crc: '4B', hex: '313233343536373839' },
   ])('#getCrc(Buffer.from("$hex", "hex")) = 0x$crc', ({ hex, crc }) => {
     const u8arr = hexToU8Arr(hex)
     const prev = crc8saej1850(u8arr.subarray(0, 1))
     expect(crc8saej1850(u8arr.subarray(1), prev)).toBe(parseInt(crc, 16))
-  })
-})
-
-describe('crc8saej1850zero', () => {
-  test.each([
-    { crc: '00', hex: '' },
-    { crc: '57', hex: '31' },
-    { crc: 'B2', hex: '48656C6C6F20576F726C6421' },
-    { crc: '37', hex: '313233343536373839' },
-  ])('#getCrc(Buffer.from("$hex", "hex")) = 0x$crc', ({ hex, crc }) => {
-    const u8arr = hexToU8Arr(hex)
-    expect(crc8saej1850zero(u8arr)).toBe(parseInt(crc, 16))
-  })
-
-  test.each([
-    { crc: 'B2', hex: '48656C6C6F20576F726C6421' },
-    { crc: '37', hex: '313233343536373839' },
-  ])('#getCrc(Buffer.from("$hex", "hex")) = 0x$crc', ({ hex, crc }) => {
-    const u8arr = hexToU8Arr(hex)
-    const prev = crc8saej1850zero(u8arr.subarray(0, 1))
-    expect(crc8saej1850zero(u8arr.subarray(1), prev)).toBe(parseInt(crc, 16))
   })
 })
 
@@ -277,7 +451,7 @@ describe('crc8wcdma', () => {
     { crc: '75', hex: '48656C6C6F20576F726C6421' },
     { crc: '25', hex: '313233343536373839' },
   ])('#getCrc(Buffer.from("$hex", "hex")) = 0x$crc', ({ hex, crc }) => {
-    const u8arr = hexToU8Arr(hex)
+    const u8arr = hex === '' ? undefined : hexToU8Arr(hex)
     expect(crc8wcdma(u8arr)).toBe(parseInt(crc, 16))
   })
 

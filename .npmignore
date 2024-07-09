@@ -134,5 +134,6 @@ out
 *.config.js
 *.config.ts
 *.test.ts
+cjsInterop.ts
 jsdelivrList.ts
 tsconfig.json

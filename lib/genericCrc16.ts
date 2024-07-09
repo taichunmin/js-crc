@@ -2,11 +2,12 @@ import { u16ToHex, reflect } from './utils'
 
 export class GenericCrc16 {
   name: string
-  readonly #u16 = new Uint16Array(1)
   readonly #initial: number
-  readonly #poly = new Uint16Array(256)
+  readonly #poly: number
   readonly #refin: boolean
   readonly #refout: boolean
+  readonly #tbl = new Uint16Array(256)
+  readonly #u16 = new Uint16Array(1)
   readonly #xorout: number
 
   constructor (opts: {
@@ -18,6 +19,7 @@ export class GenericCrc16 {
     refout: boolean
   }) {
     this.name = opts.name
+    this.#poly = opts.poly
     this.#initial = opts.initial
     this.#xorout = opts.xorout
     this.#refin = opts.refin
@@ -26,7 +28,7 @@ export class GenericCrc16 {
   }
 
   buildPoly (poly: number): void {
-    const [u16, refin, tbl] = [this.#u16, this.#refin, this.#poly]
+    const [u16, refin, tbl] = [this.#u16, this.#refin, this.#tbl]
     for (let i = 0; i < 256; i++) {
       u16[0] = (refin ? reflect.u8(i) : i) << 8
       tbl[i] = 0
@@ -38,22 +40,8 @@ export class GenericCrc16 {
     }
   }
 
-  dumpPoly (): string {
-    const [u16, tbl] = [this.#u16, this.#poly]
-    const lines = []
-    for (let i = 0; i < 32; i++) {
-      const line = []
-      for (let j = 0; j < 8; j++) {
-        u16[0] = tbl[i * 8 + j]
-        line.push(u16ToHex(u16[0]))
-      }
-      lines.push(line.join(', ') + ',\n')
-    }
-    return lines.join('')
-  }
-
   getCrc (buf: Uint8Array): number {
-    const [u16, refout, tbl, xorout] = [this.#u16, this.#refout, this.#poly, this.#xorout]
+    const [u16, refout, tbl, xorout] = [this.#u16, this.#refout, this.#tbl, this.#xorout]
     if (refout) {
       u16[0] = reflect.u16(this.#initial)
       for (const b of buf) u16[0] = tbl[(u16[0] ^ b) & 0xFF] ^ (u16[0] >>> 8)
@@ -62,6 +50,88 @@ export class GenericCrc16 {
       for (const b of buf) u16[0] = tbl[(u16[0] >>> 8) ^ b] ^ (u16[0] << 8)
     }
     return u16[0] ^ xorout
+  }
+
+  dumpPoly (space = 0): string {
+    const [u16, tbl] = [this.#u16, this.#tbl]
+    const lines = []
+    for (let i = 0; i < 32; i++) {
+      const line = []
+      for (let j = 0; j < 8; j++) {
+        u16[0] = tbl[i * 8 + j]
+        line.push(u16ToHex(u16[0]))
+      }
+      lines.push(''.padStart(space) + line.join(', ') + ',\n')
+    }
+    return lines.join('')
+  }
+
+  exportCrcFn (): string {
+    const prev = u16ToHex((this.#refout ? reflect.u16(this.#initial) : this.#initial) ^ this.#xorout)
+    const xorout = this.#xorout === 0 ? '' : ` ^ ${u16ToHex(this.#xorout)}`
+    const loop = this.#refin ? 'POLY_TABLE[(u16[0] ^ b) & 0xFF] ^ (u16[0] >>> 8)' : 'POLY_TABLE[(u16[0] >>> 8) ^ b] ^ (u16[0] << 8)'
+    return `const u16 = new Uint16Array(1)
+
+const POLY_TABLE = new Uint16Array([
+  ${this.dumpPoly(2).trim()}
+])
+
+/**
+ * - poly: ${u16ToHex(this.#poly)}
+ * - initial: ${u16ToHex(this.#initial)}
+ * - xorout: ${u16ToHex(this.#xorout)}
+ * - refin: ${this.#refin}
+ * - refout: ${this.#refout}
+ */
+export default function ${this.name} (buf: Uint8Array = new Uint8Array(), prev: number = ${prev}): number {
+  u16[0] = prev${xorout} // revert of refout and xorout
+  for (const b of buf) u16[0] = ${loop}
+  return u16[0]${xorout}
+}
+`
+  }
+
+  exportTest1 (): string {
+    const hexToCrc = (hex: string): string => u16ToHex(this.getCrc(Buffer.from(hex, 'hex'))).slice(2)
+    return `
+describe('${this.name}', () => {
+  test.each([
+    { crc: '${hexToCrc('')}', hex: '' },
+    { crc: '${hexToCrc('31')}', hex: '31' },
+    { crc: '${hexToCrc('48656C6C6F20576F726C6421')}', hex: '48656C6C6F20576F726C6421' },
+    { crc: '${hexToCrc('313233343536373839')}', hex: '313233343536373839' },
+  ])('#getCrc(Buffer.from("$hex", "hex")) = 0x$crc', ({ hex, crc }) => {
+    const u8arr = hexToU8Arr(hex)
+    expect(sut.${this.name}.getCrc(u8arr)).toBe(parseInt(crc, 16))
+  })
+})
+`
+  }
+
+  exportTest2 (): string {
+    const hexToCrc = (hex: string): string => u16ToHex(this.getCrc(Buffer.from(hex, 'hex'))).slice(2)
+    return `
+describe('${this.name}', () => {
+  test.each([
+    { crc: '${hexToCrc('')}', hex: '' },
+    { crc: '${hexToCrc('31')}', hex: '31' },
+    { crc: '${hexToCrc('48656C6C6F20576F726C6421')}', hex: '48656C6C6F20576F726C6421' },
+    { crc: '${hexToCrc('313233343536373839')}', hex: '313233343536373839' },
+  ])('${this.name}(Buffer.from("$hex", "hex")) = 0x$crc', ({ hex, crc }) => {
+    const u8arr = hex === '' ? undefined : hexToU8Arr(hex)
+    expect(${this.name}(u8arr)).toBe(parseInt(crc, 16))
+  })
+
+  test.each([
+    { crc: '${hexToCrc('48656C6C6F20576F726C6421')}', hex: '48656C6C6F20576F726C6421' },
+    { crc: '${hexToCrc('313233343536373839')}', hex: '313233343536373839' },
+  ])('${this.name}(Buffer.from("$hex", "hex")) = 0x$crc', ({ hex, crc }) => {
+    const u8arr = hexToU8Arr(hex)
+    const prev = ${this.name}(u8arr.subarray(0, 1))
+    expect(${this.name}(u8arr.subarray(1), prev)).toBe(parseInt(crc, 16))
+  })
+})
+`
   }
 }
 
@@ -113,6 +183,15 @@ export const crc16ccittfalse = new GenericCrc16({
 export const crc16cdma2000 = new GenericCrc16({
   name: 'crc16cdma2000',
   poly: 0xC867,
+  initial: 0xFFFF,
+  xorout: 0x0000,
+  refin: false,
+  refout: false,
+})
+
+export const crc16cms = new GenericCrc16({
+  name: 'crc16cms',
+  poly: 0x8005,
   initial: 0xFFFF,
   xorout: 0x0000,
   refin: false,
@@ -173,6 +252,24 @@ export const crc16genibus = new GenericCrc16({
   refout: false,
 })
 
+export const crc16gsm = new GenericCrc16({
+  name: 'crc16gsm',
+  poly: 0x1021,
+  initial: 0x0000,
+  xorout: 0xFFFF,
+  refin: false,
+  refout: false,
+})
+
+export const crc16iclass = new GenericCrc16({
+  name: 'crc16iclass',
+  poly: 0x1021,
+  initial: 0x4807,
+  xorout: 0x0BC3,
+  refin: true,
+  refout: true,
+})
+
 export const crc16kermit = new GenericCrc16({
   name: 'crc16kermit',
   poly: 0x1021,
@@ -180,6 +277,24 @@ export const crc16kermit = new GenericCrc16({
   xorout: 0x0000,
   refin: true,
   refout: true,
+})
+
+export const crc16lj1200 = new GenericCrc16({
+  name: 'crc16lj1200',
+  poly: 0x6F63,
+  initial: 0x0000,
+  xorout: 0x0000,
+  refin: false,
+  refout: false,
+})
+
+export const crc16m17 = new GenericCrc16({
+  name: 'crc16m17',
+  poly: 0x5935,
+  initial: 0xFFFF,
+  xorout: 0x0000,
+  refin: false,
+  refout: false,
 })
 
 export const crc16maxim = new GenericCrc16({
@@ -207,6 +322,51 @@ export const crc16modbus = new GenericCrc16({
   xorout: 0x0000,
   refin: true,
   refout: true,
+})
+
+export const crc16nrsc5 = new GenericCrc16({
+  name: 'crc16nrsc5',
+  poly: 0x080b,
+  initial: 0xFFFF,
+  xorout: 0x0000,
+  refin: true,
+  refout: true,
+})
+
+export const crc16opensafetya = new GenericCrc16({
+  name: 'crc16opensafetya',
+  poly: 0x5935,
+  initial: 0x0000,
+  xorout: 0x0000,
+  refin: false,
+  refout: false,
+})
+
+export const crc16opensafetyb = new GenericCrc16({
+  name: 'crc16opensafetyb',
+  poly: 0x755b,
+  initial: 0x0000,
+  xorout: 0x0000,
+  refin: false,
+  refout: false,
+})
+
+export const crc16philips = new GenericCrc16({
+  name: 'crc16philips',
+  poly: 0x1021,
+  initial: 0x49A3,
+  xorout: 0x0000,
+  refin: true,
+  refout: true,
+})
+
+export const crc16profibus = new GenericCrc16({
+  name: 'crc16profibus',
+  poly: 0x1dcf,
+  initial: 0xffff,
+  xorout: 0xffff,
+  refin: false,
+  refout: false,
 })
 
 export const crc16riello = new GenericCrc16({
