@@ -47,3 +47,6 @@ export default function crc32cdromedc (buf: Uint8Array = new Uint8Array(), prev:
   for (const b of buf) u32[0] = POLY_TABLE[(u32[0] ^ b) & 0xFF] ^ (u32[0] >>> 8)
   return u32[0]
 }
+
+// eslint-disable-next-line @typescript-eslint/prefer-optional-chain
+;(((globalThis as any || {}).taichunmin ||= {}).crc ||= {}).crc32cdromedc = crc32cdromedc

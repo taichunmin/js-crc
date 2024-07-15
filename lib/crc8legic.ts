@@ -47,3 +47,6 @@ export default function crc8legic (buf: Uint8Array = new Uint8Array(), prev: num
   for (const b of buf) u8[0] = POLY_TABLE[u8[0] ^ b]
   return u8[0]
 }
+
+// eslint-disable-next-line @typescript-eslint/prefer-optional-chain
+;(((globalThis as any || {}).taichunmin ||= {}).crc ||= {}).crc8legic = crc8legic

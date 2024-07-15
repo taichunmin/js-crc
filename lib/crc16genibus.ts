@@ -47,3 +47,6 @@ export default function crc16genibus (buf: Uint8Array = new Uint8Array(), prev: 
   for (const b of buf) u16[0] = POLY_TABLE[(u16[0] >>> 8) ^ b] ^ (u16[0] << 8)
   return u16[0] ^ 0xFFFF
 }
+
+// eslint-disable-next-line @typescript-eslint/prefer-optional-chain
+;(((globalThis as any || {}).taichunmin ||= {}).crc ||= {}).crc16genibus = crc16genibus

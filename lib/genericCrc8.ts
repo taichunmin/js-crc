@@ -82,6 +82,9 @@ export default function ${this.name} (buf: Uint8Array = new Uint8Array(), prev: 
   for (const b of buf) u8[0] = POLY_TABLE[u8[0] ^ b]
   return u8[0]${xorout}
 }
+
+// eslint-disable-next-line @typescript-eslint/prefer-optional-chain
+;(((globalThis as any || {}).taichunmin ||= {}).crc ||= {}).${this.name} = ${this.name}
 `
   }
 

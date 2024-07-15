@@ -47,3 +47,6 @@ export default function crc16iclass (buf: Uint8Array = new Uint8Array(), prev: n
   for (const b of buf) u16[0] = POLY_TABLE[(u16[0] ^ b) & 0xFF] ^ (u16[0] >>> 8)
   return u16[0] ^ 0x0BC3
 }
+
+// eslint-disable-next-line @typescript-eslint/prefer-optional-chain
+;(((globalThis as any || {}).taichunmin ||= {}).crc ||= {}).crc16iclass = crc16iclass

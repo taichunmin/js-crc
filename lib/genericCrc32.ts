@@ -89,6 +89,9 @@ export default function ${this.name} (buf: Uint8Array = new Uint8Array(), prev: 
   for (const b of buf) u32[0] = ${loop}
   return ${ret}
 }
+
+// eslint-disable-next-line @typescript-eslint/prefer-optional-chain
+;(((globalThis as any || {}).taichunmin ||= {}).crc ||= {}).${this.name} = ${this.name}
 `
   }
 
