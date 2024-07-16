@@ -6,14 +6,14 @@
 
 [![npm version](https://img.shields.io/npm/v/@taichunmin/crc.svg?logo=npm)](https://www.npmjs.org/package/@taichunmin/crc)
 [![jsdelivr hits](https://img.shields.io/jsdelivr/npm/hm/@taichunmin/crc?logo=jsdelivr)](https://www.jsdelivr.com/package/npm/@taichunmin/crc)
-[![Build status](https://img.shields.io/github/actions/workflow/status/taichunmin/js-buffer/ci.yml?branch=master)](https://github.com/taichunmin/js-buffer/actions/workflows/ci.yml)
-[![Coverage Status](https://img.shields.io/coverallsCoverage/github/taichunmin/js-buffer?branch=master)](https://coveralls.io/github/taichunmin/js-buffer?branch=master)
-[![install size](https://img.shields.io/badge/dynamic/json?url=https://packagephobia.com/v2/api.json?p=@taichunmin%2Fbuffer&query=$.install.pretty&label=install%20size)](https://packagephobia.now.sh/result?p=@taichunmin%2Fbuffer)
+[![Build status](https://img.shields.io/github/actions/workflow/status/taichunmin/js-crc/ci.yml?branch=master)](https://github.com/taichunmin/js-crc/actions/workflows/ci.yml)
+[![Coverage Status](https://img.shields.io/coverallsCoverage/github/taichunmin/js-crc?branch=master)](https://coveralls.io/github/taichunmin/js-crc?branch=master)
+[![install size](https://img.shields.io/badge/dynamic/json?url=https://packagephobia.com/v2/api.json?p=@taichunmin%2Fcrc&query=$.install.pretty&label=install%20size)](https://packagephobia.now.sh/result?p=@taichunmin%2Fcrc)
 [![npm bundle size](https://img.shields.io/bundlephobia/minzip/@taichunmin/crc)](https://bundlephobia.com/package/@taichunmin/crc@latest)
-[![npm downloads](https://img.shields.io/npm/dm/@taichunmin/crc.svg)](https://npm-stat.com/charts.html?package=@taichunmin%2Fbuffer)
-[![GitHub contributors](https://img.shields.io/github/contributors/taichunmin/js-buffer)](https://github.com/taichunmin/js-buffer/graphs/contributors)
+[![npm downloads](https://img.shields.io/npm/dm/@taichunmin/crc.svg)](https://npm-stat.com/charts.html?package=@taichunmin%2Fcrc)
+[![GitHub contributors](https://img.shields.io/github/contributors/taichunmin/js-crc)](https://github.com/taichunmin/js-crc/graphs/contributors)
 [![Known vulnerabilities](https://snyk.io/test/npm/@taichunmin/crc/badge.svg)](https://snyk.io/test/npm/@taichunmin/crc)
-[![MIT License](https://img.shields.io/github/license/taichunmin/js-buffer)](https://github.com/taichunmin/js-buffer/blob/master/LICENSE)
+[![MIT License](https://img.shields.io/github/license/taichunmin/js-crc)](https://github.com/taichunmin/js-crc/blob/master/LICENSE)
 
 </div>
 
