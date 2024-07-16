@@ -49,4 +49,4 @@ export default function crc16xmodem (buf: Uint8Array = new Uint8Array(), prev: n
 }
 
 // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
-;(((globalThis as any || {}).taichunmin ||= {}).crc ||= {}).crc16xmodem = crc16xmodem
+Object.assign(((globalThis as any || {}).taichunmin ||= {}).crc ||= {}, { crc16xmodem })

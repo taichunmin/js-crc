@@ -84,7 +84,7 @@ export default function ${this.name} (buf: Uint8Array = new Uint8Array(), prev: 
 }
 
 // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
-;(((globalThis as any || {}).taichunmin ||= {}).crc ||= {}).${this.name} = ${this.name}
+Object.assign(((globalThis as any || {}).taichunmin ||= {}).crc ||= {}, { ${this.name} })
 `
   }
 
@@ -131,6 +131,9 @@ describe('${this.name}', () => {
 `
   }
 }
+
+// eslint-disable-next-line @typescript-eslint/prefer-optional-chain
+Object.assign(((globalThis as any || {}).taichunmin ||= {}).crc ||= {}, { GenericCrc8 })
 
 export const crc8 = new GenericCrc8({
   name: 'crc8',

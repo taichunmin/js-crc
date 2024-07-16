@@ -49,4 +49,4 @@ export default function crc16kermit (buf: Uint8Array = new Uint8Array(), prev: n
 }
 
 // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
-;(((globalThis as any || {}).taichunmin ||= {}).crc ||= {}).crc16kermit = crc16kermit
+Object.assign(((globalThis as any || {}).taichunmin ||= {}).crc ||= {}, { crc16kermit })

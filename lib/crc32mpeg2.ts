@@ -49,4 +49,4 @@ export default function crc32mpeg2 (buf: Uint8Array = new Uint8Array(), prev: nu
 }
 
 // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
-;(((globalThis as any || {}).taichunmin ||= {}).crc ||= {}).crc32mpeg2 = crc32mpeg2
+Object.assign(((globalThis as any || {}).taichunmin ||= {}).crc ||= {}, { crc32mpeg2 })

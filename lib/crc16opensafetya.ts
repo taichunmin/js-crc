@@ -49,4 +49,4 @@ export default function crc16opensafetya (buf: Uint8Array = new Uint8Array(), pr
 }
 
 // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
-;(((globalThis as any || {}).taichunmin ||= {}).crc ||= {}).crc16opensafetya = crc16opensafetya
+Object.assign(((globalThis as any || {}).taichunmin ||= {}).crc ||= {}, { crc16opensafetya })

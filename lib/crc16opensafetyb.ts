@@ -49,4 +49,4 @@ export default function crc16opensafetyb (buf: Uint8Array = new Uint8Array(), pr
 }
 
 // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
-;(((globalThis as any || {}).taichunmin ||= {}).crc ||= {}).crc16opensafetyb = crc16opensafetyb
+Object.assign(((globalThis as any || {}).taichunmin ||= {}).crc ||= {}, { crc16opensafetyb })

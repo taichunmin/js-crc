@@ -5,25 +5,25 @@ async function main (): Promise<void> {
   try {
     // .cjs
     for (const jsfile of await fg(['dist/**.js'])) {
-      if (jsfile.endsWith('global.js')) continue
+      if (jsfile.startsWith('dist/index') || jsfile.endsWith('global.js')) continue
       let code = await fsPromises.readFile(jsfile, 'utf-8')
-      if (!code.includes('(((globalThis||{}).taichunmin||={}).crc||={})')) continue
+      if (!code.includes('((globalThis||{}).taichunmin||={}).crc||={}')) continue
       // console.log(`jsfile = ${jsfile}`)
 
       code = code.replace(/"use strict";.*?module.exports=[^;]+;/, '"use strict";')
-      code = code.replace('(((globalThis||{}).taichunmin||={}).crc||={})', 'module.exports')
-      code = code.replace(/module[.]exports[.]\w+/, 'module.exports')
+      code = code.replace('Object.assign(((globalThis||{}).taichunmin||={}).crc||={},{', 'module.exports=')
+      code = code.replace(/module[.]exports=\w+:(\w+)[^;]+;/, 'module.exports=$1;')
       await fsPromises.writeFile(jsfile, code, 'utf8')
     }
 
     // .mjs
     for (const mjsfile of await fg(['dist/**.mjs'])) {
       let code = await fsPromises.readFile(mjsfile, 'utf-8')
-      if (!code.includes('(((globalThis||{}).taichunmin||={}).crc||={})')) continue
+      if (!code.includes('((globalThis||{}).taichunmin||={}).crc||={}')) continue
       // console.log(`mjsfile = ${mjsfile}`)
 
-      code = code.replace('(((globalThis||{}).taichunmin||={}).crc||={})', 'module.exports')
-      code = code.replace(/module[.]exports[.]\w+=\w+;/, '')
+      code = code.replace('Object.assign(((globalThis||{}).taichunmin||={}).crc||={},{', 'module.exports=')
+      code = code.replace(/module[.]exports=\w+:(\w+)[^;]+;/, '')
       await fsPromises.writeFile(mjsfile, code, 'utf8')
     }
 

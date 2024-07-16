@@ -49,4 +49,4 @@ export default function crc8icode (buf: Uint8Array = new Uint8Array(), prev: num
 }
 
 // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
-;(((globalThis as any || {}).taichunmin ||= {}).crc ||= {}).crc8icode = crc8icode
+Object.assign(((globalThis as any || {}).taichunmin ||= {}).crc ||= {}, { crc8icode })

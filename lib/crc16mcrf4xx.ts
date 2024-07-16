@@ -49,4 +49,4 @@ export default function crc16mcrf4xx (buf: Uint8Array = new Uint8Array(), prev: 
 }
 
 // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
-;(((globalThis as any || {}).taichunmin ||= {}).crc ||= {}).crc16mcrf4xx = crc16mcrf4xx
+Object.assign(((globalThis as any || {}).taichunmin ||= {}).crc ||= {}, { crc16mcrf4xx })

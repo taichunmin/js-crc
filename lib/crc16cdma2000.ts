@@ -49,4 +49,4 @@ export default function crc16cdma2000 (buf: Uint8Array = new Uint8Array(), prev:
 }
 
 // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
-;(((globalThis as any || {}).taichunmin ||= {}).crc ||= {}).crc16cdma2000 = crc16cdma2000
+Object.assign(((globalThis as any || {}).taichunmin ||= {}).crc ||= {}, { crc16cdma2000 })

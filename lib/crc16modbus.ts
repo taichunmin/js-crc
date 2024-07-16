@@ -49,4 +49,4 @@ export default function crc16modbus (buf: Uint8Array = new Uint8Array(), prev: n
 }
 
 // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
-;(((globalThis as any || {}).taichunmin ||= {}).crc ||= {}).crc16modbus = crc16modbus
+Object.assign(((globalThis as any || {}).taichunmin ||= {}).crc ||= {}, { crc16modbus })

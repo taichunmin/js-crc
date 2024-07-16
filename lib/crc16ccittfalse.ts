@@ -49,4 +49,4 @@ export default function crc16ccittfalse (buf: Uint8Array = new Uint8Array(), pre
 }
 
 // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
-;(((globalThis as any || {}).taichunmin ||= {}).crc ||= {}).crc16ccittfalse = crc16ccittfalse
+Object.assign(((globalThis as any || {}).taichunmin ||= {}).crc ||= {}, { crc16ccittfalse })

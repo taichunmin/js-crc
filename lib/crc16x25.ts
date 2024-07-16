@@ -49,4 +49,4 @@ export default function crc16x25 (buf: Uint8Array = new Uint8Array(), prev: numb
 }
 
 // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
-;(((globalThis as any || {}).taichunmin ||= {}).crc ||= {}).crc16x25 = crc16x25
+Object.assign(((globalThis as any || {}).taichunmin ||= {}).crc ||= {}, { crc16x25 })

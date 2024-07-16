@@ -1,0 +1,101 @@
+name: Test npm
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: install and npm test
+        run: |
+          set -ex
+          mkdir tmp
+          cd tmp
+          yarn init -y
+          yarn add @taichunmin/crc tsx
+
+          cp ./node_modules/@taichunmin/crc/dist/crc32.global.js .
+          cat << "EOF" >> crc32.global.js
+            const crc32 = globalThis.taichunmin.crc.crc32
+            const actual = crc32('hello world')
+            console.log(`crc32.global.js: crc32 = ${actual}`)
+            process.exit(actual !== 1804055020 ? 1 : 0)
+          EOF
+          node ./crc32.global.js
+
+          cat << "EOF" > crc32.cjs
+            const crc32 = require('@taichunmin/crc/crc32')
+            const actual = crc32('hello world')
+            console.log(`crc32.cjs: crc32 = ${actual}`)
+            process.exit(actual !== 1804055020 ? 1 : 0)
+          EOF
+          node ./crc32.cjs
+
+          cat << "EOF" > crc32.cts
+            const crc32 = require('@taichunmin/crc/crc32')
+            const actual = crc32('hello world')
+            console.log(`crc32.cts: crc32 = ${actual}`)
+            process.exit(actual !== 1804055020 ? 1 : 0)
+          EOF
+          yarn tsx ./crc32.cts
+
+          cat << "EOF" > crc32.mjs
+            import crc32 from '@taichunmin/crc/crc32'
+            const actual = crc32('hello world')
+            console.log(`crc32.mjs: crc32 = ${actual}`)
+            process.exit(actual !== 1804055020 ? 1 : 0)
+          EOF
+          node ./crc32.mjs
+
+          cat << "EOF" > crc32.mts
+            import crc32 from '@taichunmin/crc/crc32'
+            const actual = crc32('hello world')
+            console.log(`crc32.mts: crc32 = ${actual}`)
+            process.exit(actual !== 1804055020 ? 1 : 0)
+          EOF
+          yarn tsx ./crc32.mts
+
+          cp ./node_modules/@taichunmin/crc/dist/index.global.js .
+          cat << "EOF" >> index.global.js
+            const crc32 = globalThis.taichunmin.crc.crc32
+            const actual = crc32('hello world')
+            console.log(`index.global.js: crc32 = ${actual}`)
+            process.exit(actual !== 1804055020 ? 1 : 0)
+          EOF
+          node ./index.global.js
+
+          cat << "EOF" > index.cjs
+            const { crc32 } = require('@taichunmin/crc')
+            const actual = crc32('hello world')
+            console.log(`index.cjs: crc32 = ${actual}`)
+            process.exit(actual !== 1804055020 ? 1 : 0)
+          EOF
+          node ./index.cjs
+
+          cat << "EOF" > index.cts
+            const { crc32 } = require('@taichunmin/crc')
+            const actual = crc32('hello world')
+            console.log(`index.cts: crc32 = ${actual}`)
+            process.exit(actual !== 1804055020 ? 1 : 0)
+          EOF
+          yarn tsx ./index.cts
+
+          cat << "EOF" > index.mjs
+            import { crc32 } from '@taichunmin/crc'
+            const actual = crc32('hello world')
+            console.log(`index.mjs: crc32 = ${actual}`)
+            process.exit(actual !== 1804055020 ? 1 : 0)
+          EOF
+          node ./index.mjs
+
+          cat << "EOF" > index.mts
+            import { crc32 } from '@taichunmin/crc'
+            const actual = crc32('hello world')
+            console.log(`index.mts: crc32 = ${actual}`)
+            process.exit(actual !== 1804055020 ? 1 : 0)
+          EOF
+          yarn tsx ./index.mts

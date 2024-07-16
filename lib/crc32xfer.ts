@@ -49,4 +49,4 @@ export default function crc32xfer (buf: Uint8Array = new Uint8Array(), prev: num
 }
 
 // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
-;(((globalThis as any || {}).taichunmin ||= {}).crc ||= {}).crc32xfer = crc32xfer
+Object.assign(((globalThis as any || {}).taichunmin ||= {}).crc ||= {}, { crc32xfer })

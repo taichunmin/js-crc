@@ -49,4 +49,4 @@ export default function crc8gsmb (buf: Uint8Array = new Uint8Array(), prev: numb
 }
 
 // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
-;(((globalThis as any || {}).taichunmin ||= {}).crc ||= {}).crc8gsmb = crc8gsmb
+Object.assign(((globalThis as any || {}).taichunmin ||= {}).crc ||= {}, { crc8gsmb })

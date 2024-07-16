@@ -49,4 +49,4 @@ export default function crc32bzip2 (buf: Uint8Array = new Uint8Array(), prev: nu
 }
 
 // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
-;(((globalThis as any || {}).taichunmin ||= {}).crc ||= {}).crc32bzip2 = crc32bzip2
+Object.assign(((globalThis as any || {}).taichunmin ||= {}).crc ||= {}, { crc32bzip2 })

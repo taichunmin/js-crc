@@ -49,4 +49,4 @@ export default function crc8itu (buf: Uint8Array = new Uint8Array(), prev: numbe
 }
 
 // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
-;(((globalThis as any || {}).taichunmin ||= {}).crc ||= {}).crc8itu = crc8itu
+Object.assign(((globalThis as any || {}).taichunmin ||= {}).crc ||= {}, { crc8itu })

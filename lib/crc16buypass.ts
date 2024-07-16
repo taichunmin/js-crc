@@ -49,4 +49,4 @@ export default function crc16buypass (buf: Uint8Array = new Uint8Array(), prev: 
 }
 
 // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
-;(((globalThis as any || {}).taichunmin ||= {}).crc ||= {}).crc16buypass = crc16buypass
+Object.assign(((globalThis as any || {}).taichunmin ||= {}).crc ||= {}, { crc16buypass })

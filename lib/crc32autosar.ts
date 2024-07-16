@@ -49,4 +49,4 @@ export default function crc32autosar (buf: Uint8Array = new Uint8Array(), prev: 
 }
 
 // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
-;(((globalThis as any || {}).taichunmin ||= {}).crc ||= {}).crc32autosar = crc32autosar
+Object.assign(((globalThis as any || {}).taichunmin ||= {}).crc ||= {}, { crc32autosar })

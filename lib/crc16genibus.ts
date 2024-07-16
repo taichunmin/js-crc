@@ -49,4 +49,4 @@ export default function crc16genibus (buf: Uint8Array = new Uint8Array(), prev: 
 }
 
 // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
-;(((globalThis as any || {}).taichunmin ||= {}).crc ||= {}).crc16genibus = crc16genibus
+Object.assign(((globalThis as any || {}).taichunmin ||= {}).crc ||= {}, { crc16genibus })

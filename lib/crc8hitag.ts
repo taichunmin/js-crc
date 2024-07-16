@@ -49,4 +49,4 @@ export default function crc8hitag (buf: Uint8Array = new Uint8Array(), prev: num
 }
 
 // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
-;(((globalThis as any || {}).taichunmin ||= {}).crc ||= {}).crc8hitag = crc8hitag
+Object.assign(((globalThis as any || {}).taichunmin ||= {}).crc ||= {}, { crc8hitag })
