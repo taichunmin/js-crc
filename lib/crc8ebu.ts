@@ -1,4 +1,4 @@
-const u8 = new Uint8Array(1)
+import { setObject, u8 } from './common2'
 
 const POLY_TABLE = new Uint8Array([
   0x00, 0x64, 0xC8, 0xAC, 0xE1, 0x85, 0x29, 0x4D,
@@ -48,5 +48,4 @@ export default function crc8ebu (buf: Uint8Array = new Uint8Array(), prev: numbe
   return u8[0]
 }
 
-// eslint-disable-next-line @typescript-eslint/prefer-optional-chain
-Object.assign(((globalThis as any || {}).taichunmin ||= {}).crc ||= {}, { crc8ebu })
+setObject(globalThis, ['taichunmin', 'crc', 'crc8ebu'], crc8ebu)

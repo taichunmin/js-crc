@@ -1,4 +1,5 @@
-import { u32ToHex, reflect } from './utils'
+import { setObject } from './common2'
+import { reflect, u32ToHex } from './common1'
 
 export class GenericCrc32 {
   name: string
@@ -71,7 +72,7 @@ export class GenericCrc32 {
     const xorout = this.#xorout === 0 ? '' : ` ^ ${u32ToHex(this.#xorout)}`
     const loop = this.#refin ? 'POLY_TABLE[(u32[0] ^ b) & 0xFF] ^ (u32[0] >>> 8)' : 'POLY_TABLE[(u32[0] >>> 24) ^ b] ^ (u32[0] << 8)'
     const ret = xorout === '' ? 'u32[0]' : `(u32[0]${xorout}) >>> 0`
-    return `const u32 = new Uint32Array(1)
+    return `import { setObject, u32 } from './common2'
 
 const POLY_TABLE = new Uint32Array([
   ${this.dumpPoly(2).trim()}
@@ -90,8 +91,7 @@ export default function ${this.name} (buf: Uint8Array = new Uint8Array(), prev: 
   return ${ret}
 }
 
-// eslint-disable-next-line @typescript-eslint/prefer-optional-chain
-Object.assign(((globalThis as any || {}).taichunmin ||= {}).crc ||= {}, { ${this.name} })
+setObject(globalThis, ['taichunmin', 'crc', '${this.name}'], ${this.name})
 `
   }
 
@@ -139,8 +139,7 @@ describe('${this.name}', () => {
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/prefer-optional-chain
-Object.assign(((globalThis as any || {}).taichunmin ||= {}).crc ||= {}, { GenericCrc32 })
+setObject(globalThis, ['taichunmin', 'crc', 'GenericCrc32'], GenericCrc32)
 
 export const crc32 = new GenericCrc32({
   name: 'crc32',

@@ -1,4 +1,5 @@
-import { u16ToHex, reflect } from './utils'
+import { setObject } from './common2'
+import { reflect, u16ToHex } from './common1'
 
 export class GenericCrc16 {
   name: string
@@ -70,7 +71,7 @@ export class GenericCrc16 {
     const prev = u16ToHex((this.#refout ? reflect.u16(this.#initial) : this.#initial) ^ this.#xorout)
     const xorout = this.#xorout === 0 ? '' : ` ^ ${u16ToHex(this.#xorout)}`
     const loop = this.#refin ? 'POLY_TABLE[(u16[0] ^ b) & 0xFF] ^ (u16[0] >>> 8)' : 'POLY_TABLE[(u16[0] >>> 8) ^ b] ^ (u16[0] << 8)'
-    return `const u16 = new Uint16Array(1)
+    return `import { setObject, u16 } from './common2'
 
 const POLY_TABLE = new Uint16Array([
   ${this.dumpPoly(2).trim()}
@@ -89,8 +90,7 @@ export default function ${this.name} (buf: Uint8Array = new Uint8Array(), prev: 
   return u16[0]${xorout}
 }
 
-// eslint-disable-next-line @typescript-eslint/prefer-optional-chain
-Object.assign(((globalThis as any || {}).taichunmin ||= {}).crc ||= {}, { ${this.name} })
+setObject(globalThis, ['taichunmin', 'crc', '${this.name}'], ${this.name})
 `
   }
 
@@ -138,8 +138,7 @@ describe('${this.name}', () => {
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/prefer-optional-chain
-Object.assign(((globalThis as any || {}).taichunmin ||= {}).crc ||= {}, { GenericCrc16 })
+setObject(globalThis, ['taichunmin', 'crc', 'GenericCrc16'], GenericCrc16)
 
 export const crc16a = new GenericCrc16({
   name: 'crc16a',

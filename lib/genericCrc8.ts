@@ -1,4 +1,5 @@
-import { u8ToHex, reflect } from './utils'
+import { setObject } from './common2'
+import { reflect, u8ToHex } from './common1'
 
 export class GenericCrc8 {
   name: string
@@ -64,7 +65,7 @@ export class GenericCrc8 {
   exportCrcFn (): string {
     const prev = u8ToHex((this.#refout ? reflect.u8(this.#initial) : this.#initial) ^ this.#xorout)
     const xorout = this.#xorout === 0 ? '' : ` ^ ${u8ToHex(this.#xorout)}`
-    return `const u8 = new Uint8Array(1)
+    return `import { setObject, u8 } from './common2'
 
 const POLY_TABLE = new Uint8Array([
   ${this.dumpPoly(2).trim()}
@@ -83,8 +84,7 @@ export default function ${this.name} (buf: Uint8Array = new Uint8Array(), prev: 
   return u8[0]${xorout}
 }
 
-// eslint-disable-next-line @typescript-eslint/prefer-optional-chain
-Object.assign(((globalThis as any || {}).taichunmin ||= {}).crc ||= {}, { ${this.name} })
+setObject(globalThis, ['taichunmin', 'crc', '${this.name}'], ${this.name})
 `
   }
 
@@ -132,8 +132,7 @@ describe('${this.name}', () => {
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/prefer-optional-chain
-Object.assign(((globalThis as any || {}).taichunmin ||= {}).crc ||= {}, { GenericCrc8 })
+setObject(globalThis, ['taichunmin', 'crc', 'GenericCrc8'], GenericCrc8)
 
 export const crc8 = new GenericCrc8({
   name: 'crc8',

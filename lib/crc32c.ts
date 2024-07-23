@@ -1,4 +1,4 @@
-const u32 = new Uint32Array(1)
+import { setObject, u32 } from './common2'
 
 const POLY_TABLE = new Uint32Array([
   0x00000000, 0xF26B8303, 0xE13B70F7, 0x1350F3F4, 0xC79A971F, 0x35F1141C, 0x26A1E7E8, 0xD4CA64EB,
@@ -48,5 +48,4 @@ export default function crc32c (buf: Uint8Array = new Uint8Array(), prev: number
   return (u32[0] ^ 0xFFFFFFFF) >>> 0
 }
 
-// eslint-disable-next-line @typescript-eslint/prefer-optional-chain
-Object.assign(((globalThis as any || {}).taichunmin ||= {}).crc ||= {}, { crc32c })
+setObject(globalThis, ['taichunmin', 'crc', 'crc32c'], crc32c)

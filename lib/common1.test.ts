@@ -1,4 +1,4 @@
-import * as sut from './utils'
+import * as sut from './common1'
 
 test.each([
   { a: '00', b: '00' },

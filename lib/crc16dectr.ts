@@ -1,4 +1,4 @@
-const u16 = new Uint16Array(1)
+import { setObject, u16 } from './common2'
 
 const POLY_TABLE = new Uint16Array([
   0x0000, 0x0589, 0x0B12, 0x0E9B, 0x1624, 0x13AD, 0x1D36, 0x18BF,
@@ -48,5 +48,4 @@ export default function crc16dectr (buf: Uint8Array = new Uint8Array(), prev: nu
   return u16[0] ^ 0x0001
 }
 
-// eslint-disable-next-line @typescript-eslint/prefer-optional-chain
-Object.assign(((globalThis as any || {}).taichunmin ||= {}).crc ||= {}, { crc16dectr })
+setObject(globalThis, ['taichunmin', 'crc', 'crc16dectr'], crc16dectr)
