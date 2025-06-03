@@ -135,16 +135,16 @@ Using jsDelivr CDN:
 
 <!-- module -->
 <script type="module">
-  import crc8 from 'https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc8.mjs/+esm'
-  import crc16a from 'https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc16a.mjs/+esm'
-  import crc32 from 'https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32.mjs/+esm'
+  import crc8 from 'https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/crc8/+esm'
+  import crc16a from 'https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/crc16a/+esm'
+  import crc32 from 'https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/crc32/+esm'
 </script>
 
 <!-- module + async import (can be used in DevTools) -->
 <script type="module">
-  const { default: crc8 } = await import('https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc8.mjs/+esm')
-  const { default: crc16a } = await import('https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc16a.mjs/+esm')
-  const { default: crc32 } = await import('https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32.mjs/+esm')
+  const { default: crc8 } = await import('https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/crc8/+esm')
+  const { default: crc16a } = await import('https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/crc16a/+esm')
+  const { default: crc32 } = await import('https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/crc32/+esm')
 </script>
 ```
 
@@ -156,7 +156,7 @@ Using specific CRC is the recommended way to reduce bundle size:
 
 ```js
 import crc32 from '@taichunmin/crc/crc32'
-crc32(new Uint8Array([0x68, 0x65, 0x6C, 0x6C, 0x6F])).toString(16)
+console.log(crc32(new Uint8Array([0x68, 0x65, 0x6C, 0x6C, 0x6F])).toString(16))
 // "3610a686"
 ```
 
@@ -198,21 +198,21 @@ value.toString(16)
 <script src="https://cdn.jsdelivr.net/npm/@taichunmin/crc@0"></script>
 <script>
   const { crc32 } = window?.taichunmin?.crc
-  crc32(new Uint8Array([0x68, 0x65, 0x6C, 0x6C, 0x6F])).toString(16)
+  console.log(crc32(new Uint8Array([0x68, 0x65, 0x6C, 0x6C, 0x6F])).toString(16))
   // "3610a686"
 </script>
 
 <!-- module -->
 <script type="module">
-  import crc32 from 'https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32.mjs/+esm'
-  crc32(new Uint8Array([0x68, 0x65, 0x6C, 0x6C, 0x6F])).toString(16)
+  import crc32 from 'https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/crc32/+esm'
+  console.log(crc32(new Uint8Array([0x68, 0x65, 0x6C, 0x6C, 0x6F])).toString(16))
   // "3610a686"
 </script>
 
 <!-- module + import (can be used in DevTools) -->
 <script type="module">
-  const { default: crc32 } = await import('https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/dist/crc32.mjs/+esm')
-  crc32(new Uint8Array([0x68, 0x65, 0x6C, 0x6C, 0x6F])).toString(16)
+  const { default: crc32 } = await import('https://cdn.jsdelivr.net/npm/@taichunmin/crc@0/crc32/+esm')
+  console.log(crc32(new Uint8Array([0x68, 0x65, 0x6C, 0x6C, 0x6F])).toString(16))
   // "3610a686"
 </script>
 ```
