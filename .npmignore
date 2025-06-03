@@ -130,10 +130,12 @@ out
 
 # extra ignore file for npm
 .*.js
+.eslintignore
 .github
 *.config.js
 *.config.ts
 *.test.ts
 cjsInterop.ts
 jsdelivrList.ts
+renamer.mjs
 tsconfig.json

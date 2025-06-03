@@ -1,6 +1,7 @@
 import _ from 'lodash'
 import fsPromises from 'node:fs/promises'
 import path from 'node:path'
+import fg from 'fast-glob'
 
 interface PkgExportVal {
   import?: string
@@ -18,19 +19,24 @@ async function main (): Promise<void> {
     const pkg: Pkg = JSON.parse(await fsPromises.readFile(path.resolve(__dirname, './package.json'), 'utf-8'))
     const majorVer = pkg.version.split('.')[0]
     const lines = []
-    for (const val1 of _.values(pkg.exports)) {
-      if (!_.isNil(val1.import)) {
-        lines.push(
-          `https://cdn.jsdelivr.net/npm/${pkg.name}@${majorVer}/${val1.import.slice(2)}/+esm`,
-          `https://cdn.jsdelivr.net/npm/${pkg.name}/${val1.import.slice(2)}/+esm`,
-        )
-      }
-      if (!_.isNil(val1.script)) {
-        lines.push(
-          `https://cdn.jsdelivr.net/npm/${pkg.name}@${majorVer}/${val1.script.slice(2)}`,
-          `https://cdn.jsdelivr.net/npm/${pkg.name}/${val1.script.slice(2)}`,
-        )
-      }
+    for (const filePath of await fg(['dist/mjs/*.mjs', 'dist/global-js/*.global.js'])) {
+      const matched = /([^/]*?)[.](d.mts|d.ts|global.js|mjs|js)$/.exec(filePath)
+      if (_.isNil(matched)) continue
+      // console.log(`filePath: ${filePath}, matched: ${JSON.stringify(matched)}`)
+      lines.push(
+        ...(matched[2] === 'global.js' ? [
+          `https://cdn.jsdelivr.net/npm/${pkg.name}@${majorVer}/${filePath}`,
+          `https://cdn.jsdelivr.net/npm/${pkg.name}/${filePath}`,
+          `https://cdn.jsdelivr.net/npm/${pkg.name}@${majorVer}/${matched[1]}`,
+          `https://cdn.jsdelivr.net/npm/${pkg.name}/${matched[1]}`,
+        ] : []),
+        ...(matched[2] === 'mjs' ? [
+          `https://cdn.jsdelivr.net/npm/${pkg.name}@${majorVer}/${filePath}/+esm`,
+          `https://cdn.jsdelivr.net/npm/${pkg.name}/${filePath}/+esm`,
+          `https://cdn.jsdelivr.net/npm/${pkg.name}@${majorVer}/${matched[1]}/+esm`,
+          `https://cdn.jsdelivr.net/npm/${pkg.name}/${matched[1]}/+esm`,
+        ] : []),
+      )
     }
     console.log(lines.join('\n'))
   } catch (err) {
