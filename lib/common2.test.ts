@@ -65,7 +65,7 @@ describe('setObject', () => {
     { expected: undefined },
   ])('should not error when `parent` is $expected', ({ expected }) => {
     const object = expected
-    const actual = sut.setObject(object, ['a', 'b'], 2)
+    const actual = sut.setObject(object as any, ['a', 'b'], 2)
 
     expect(actual).toBe(object)
     expect(object).toEqual(expected)

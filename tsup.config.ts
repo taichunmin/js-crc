@@ -1,4 +1,3 @@
-import _ from 'lodash'
 import { defineConfig, type Options } from 'tsup'
 
 const sharedConfig: Options = {
