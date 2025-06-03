@@ -3,13 +3,13 @@ import { reflect, u32ToHex } from './common1'
 
 export class GenericCrc32 {
   name: string
-  readonly #initial: number
-  readonly #poly: number
-  readonly #refin: boolean
-  readonly #refout: boolean
-  readonly #tbl = new Uint32Array(256)
-  readonly #u32 = new Uint32Array(1)
-  readonly #xorout: number
+  readonly initial: number
+  readonly poly: number
+  readonly refin: boolean
+  readonly refout: boolean
+  readonly tbl = new Uint32Array(256)
+  readonly u32 = new Uint32Array(1)
+  readonly xorout: number
 
   constructor (opts: {
     name: string
@@ -20,16 +20,16 @@ export class GenericCrc32 {
     refout: boolean
   }) {
     this.name = opts.name
-    this.#poly = opts.poly
-    this.#initial = opts.initial
-    this.#xorout = opts.xorout
-    this.#refin = opts.refin
-    this.#refout = opts.refout
+    this.poly = opts.poly
+    this.initial = opts.initial
+    this.xorout = opts.xorout
+    this.refin = opts.refin
+    this.refout = opts.refout
     this.buildPoly(opts.poly)
   }
 
   buildPoly (poly: number): void {
-    const [u32, refin, tbl] = [this.#u32, this.#refin, this.#tbl]
+    const [u32, refin, tbl] = [this.u32, this.refin, this.tbl]
     for (let i = 0; i < 256; i++) {
       u32[0] = (refin ? reflect.u8(i) : i) << 24
       tbl[i] = 0
@@ -42,19 +42,19 @@ export class GenericCrc32 {
   }
 
   getCrc (buf: Uint8Array): number {
-    const [u32, refout, tbl, xorout] = [this.#u32, this.#refout, this.#tbl, this.#xorout]
+    const [u32, refout, tbl, xorout] = [this.u32, this.refout, this.tbl, this.xorout]
     if (refout) {
-      u32[0] = reflect.u32(this.#initial)
+      u32[0] = reflect.u32(this.initial)
       for (const b of buf) u32[0] = tbl[(u32[0] ^ b) & 0xFF] ^ (u32[0] >>> 8)
     } else {
-      u32[0] = this.#initial
+      u32[0] = this.initial
       for (const b of buf) u32[0] = tbl[(u32[0] >>> 24) ^ b] ^ (u32[0] << 8)
     }
     return (u32[0] ^ xorout) >>> 0
   }
 
   dumpPoly (space = 0): string {
-    const [u32, tbl] = [this.#u32, this.#tbl]
+    const [u32, tbl] = [this.u32, this.tbl]
     const lines = []
     for (let i = 0; i < 32; i++) {
       const line = []
@@ -68,9 +68,9 @@ export class GenericCrc32 {
   }
 
   exportCrcFn (): string {
-    const prev = u32ToHex((this.#refout ? reflect.u32(this.#initial) : this.#initial) ^ this.#xorout)
-    const xorout = this.#xorout === 0 ? '' : ` ^ ${u32ToHex(this.#xorout)}`
-    const loop = this.#refin ? 'POLY_TABLE[(u32[0] ^ b) & 0xFF] ^ (u32[0] >>> 8)' : 'POLY_TABLE[(u32[0] >>> 24) ^ b] ^ (u32[0] << 8)'
+    const prev = u32ToHex((this.refout ? reflect.u32(this.initial) : this.initial) ^ this.xorout)
+    const xorout = this.xorout === 0 ? '' : ` ^ ${u32ToHex(this.xorout)}`
+    const loop = this.refin ? 'POLY_TABLE[(u32[0] ^ b) & 0xFF] ^ (u32[0] >>> 8)' : 'POLY_TABLE[(u32[0] >>> 24) ^ b] ^ (u32[0] << 8)'
     const ret = xorout === '' ? 'u32[0]' : `(u32[0]${xorout}) >>> 0`
     return `import { setObject, u32 } from './common2'
 
@@ -79,11 +79,11 @@ const POLY_TABLE = new Uint32Array([
 ])
 
 /**
- * - poly: ${u32ToHex(this.#poly)}
- * - initial: ${u32ToHex(this.#initial)}
- * - xorout: ${u32ToHex(this.#xorout)}
- * - refin: ${this.#refin}
- * - refout: ${this.#refout}
+ * - poly: ${u32ToHex(this.poly)}
+ * - initial: ${u32ToHex(this.initial)}
+ * - xorout: ${u32ToHex(this.xorout)}
+ * - refin: ${this.refin}
+ * - refout: ${this.refout}
  */
 export default function ${this.name} (buf: Uint8Array = new Uint8Array(), prev: number = ${prev}): number {
   u32[0] = prev${xorout} // revert of refout and xorout

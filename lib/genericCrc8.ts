@@ -3,13 +3,13 @@ import { reflect, u8ToHex } from './common1'
 
 export class GenericCrc8 {
   name: string
-  readonly #initial: number
-  readonly #poly: number
-  readonly #refin: boolean
-  readonly #refout: boolean
-  readonly #tbl = new Uint8Array(256)
-  readonly #u8 = new Uint8Array(1)
-  readonly #xorout: number
+  readonly initial: number
+  readonly poly: number
+  readonly refin: boolean
+  readonly refout: boolean
+  readonly tbl = new Uint8Array(256)
+  readonly u8 = new Uint8Array(1)
+  readonly xorout: number
 
   constructor (opts: {
     name: string
@@ -20,16 +20,16 @@ export class GenericCrc8 {
     refout: boolean
   }) {
     this.name = opts.name
-    this.#poly = opts.poly
-    this.#initial = opts.initial
-    this.#xorout = opts.xorout
-    this.#refin = opts.refin
-    this.#refout = opts.refout
+    this.poly = opts.poly
+    this.initial = opts.initial
+    this.xorout = opts.xorout
+    this.refin = opts.refin
+    this.refout = opts.refout
     this.buildPoly(opts.poly)
   }
 
   buildPoly (poly: number): void {
-    const [u8, refin, tbl] = [this.#u8, this.#refin, this.#tbl]
+    const [u8, refin, tbl] = [this.u8, this.refin, this.tbl]
     for (let i = 0; i < 256; i++) {
       u8[0] = refin ? reflect.u8(i) : i
       tbl[i] = 0
@@ -42,14 +42,14 @@ export class GenericCrc8 {
   }
 
   getCrc (buf: Uint8Array): number {
-    const [u8, refout, tbl, xorout] = [this.#u8, this.#refout, this.#tbl, this.#xorout]
-    u8[0] = refout ? reflect.u8(this.#initial) : this.#initial
+    const [u8, refout, tbl, xorout] = [this.u8, this.refout, this.tbl, this.xorout]
+    u8[0] = refout ? reflect.u8(this.initial) : this.initial
     for (const b of buf) u8[0] = tbl[u8[0] ^ b]
     return u8[0] ^ xorout
   }
 
   dumpPoly (space = 0): string {
-    const [u8, tbl] = [this.#u8, this.#tbl]
+    const [u8, tbl] = [this.u8, this.tbl]
     const lines = []
     for (let i = 0; i < 32; i++) {
       const line = []
@@ -63,8 +63,8 @@ export class GenericCrc8 {
   }
 
   exportCrcFn (): string {
-    const prev = u8ToHex((this.#refout ? reflect.u8(this.#initial) : this.#initial) ^ this.#xorout)
-    const xorout = this.#xorout === 0 ? '' : ` ^ ${u8ToHex(this.#xorout)}`
+    const prev = u8ToHex((this.refout ? reflect.u8(this.initial) : this.initial) ^ this.xorout)
+    const xorout = this.xorout === 0 ? '' : ` ^ ${u8ToHex(this.xorout)}`
     return `import { setObject, u8 } from './common2'
 
 const POLY_TABLE = new Uint8Array([
@@ -72,11 +72,11 @@ const POLY_TABLE = new Uint8Array([
 ])
 
 /**
- * - poly: ${u8ToHex(this.#poly)}
- * - initial: ${u8ToHex(this.#initial)}
- * - xorout: ${u8ToHex(this.#xorout)}
- * - refin: ${this.#refin}
- * - refout: ${this.#refout}
+ * - poly: ${u8ToHex(this.poly)}
+ * - initial: ${u8ToHex(this.initial)}
+ * - xorout: ${u8ToHex(this.xorout)}
+ * - refin: ${this.refin}
+ * - refout: ${this.refout}
  */
 export default function ${this.name} (buf: Uint8Array = new Uint8Array(), prev: number = ${prev}): number {
   u8[0] = prev${xorout}

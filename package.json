@@ -7,7 +7,7 @@
   "main": "dist/js/index.js",
   "module": "dist/mjs/index.mjs",
   "name": "@taichunmin/crc",
-  "version": "0.0.19",
+  "version": "0.0.20",
   "author": {
     "email": "taichunmin@gmail.com",
     "name": "Chunmin Tai",
