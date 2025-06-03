@@ -7,7 +7,7 @@
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "name": "@taichunmin/crc",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "author": {
     "email": "taichunmin@gmail.com",
     "name": "Chunmin Tai",
@@ -47,21 +47,21 @@
     "./package.json": "./package.json",
     ".": {
       "types": {
-        "import": "./dist/index.d.mts",
-        "require": "./dist/index.d.ts"
+        "import": "./dist/d-mts/index.d.mts",
+        "require": "./dist/d-ts/index.d.ts"
       },
-      "script": "./dist/index.global.js",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.js"
+      "script": "./dist/global-js/index.global.js",
+      "import": "./dist/mjs/index.mjs",
+      "require": "./dist/js/index.js"
     },
     "./*": {
       "types": {
-        "import": "./dist/*.d.mts",
-        "require": "./dist/*.d.ts"
+        "import": "./dist/d-mts/*.d.mts",
+        "require": "./dist/d-ts/*.d.ts"
       },
-      "script": "./dist/*.global.js",
-      "import": "./dist/*.mjs",
-      "require": "./dist/*.js"
+      "script": "./dist/global-js/*.global.js",
+      "import": "./dist/mjs/*.mjs",
+      "require": "./dist/js/*.js"
     }
   },
   "keywords": [
