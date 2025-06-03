@@ -1,13 +1,13 @@
 {
-  "browser": "dist/index.global.js",
+  "browser": "dist/global-js/index.global.js",
   "description": "A cross platform alternative for calculating Cyclic Redundancy Checks (CRC) values.",
   "homepage": "https://github.com/taichunmin/js-crc",
-  "jsnext:main": "dist/index.mjs",
+  "jsnext:main": "dist/mjs/index.mjs",
   "license": "MIT",
-  "main": "dist/index.js",
-  "module": "dist/index.mjs",
+  "main": "dist/js/index.js",
+  "module": "dist/mjs/index.mjs",
   "name": "@taichunmin/crc",
-  "version": "0.0.18",
+  "version": "0.0.19",
   "author": {
     "email": "taichunmin@gmail.com",
     "name": "Chunmin Tai",
