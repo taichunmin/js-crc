@@ -135,7 +135,5 @@ out
 *.config.js
 *.config.ts
 *.test.ts
-cjsInterop.ts
-jsdelivrList.ts
-renamer.mjs
+build-utils/
 tsconfig.json

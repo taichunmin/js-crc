@@ -1,8 +1,9 @@
+import fg from 'fast-glob'
 import _ from 'lodash'
 import fsPromises from 'node:fs/promises'
 import path from 'node:path'
-import fg from 'fast-glob'
 
+const rootdir = path.resolve(__dirname, '../')
 interface PkgExportVal {
   import?: string
   script?: string
@@ -16,10 +17,10 @@ interface Pkg {
 
 async function main (): Promise<void> {
   try {
-    const pkg: Pkg = JSON.parse(await fsPromises.readFile(path.resolve(__dirname, './package.json'), 'utf-8'))
+    const pkg: Pkg = JSON.parse(await fsPromises.readFile(path.resolve(__dirname, '../package.json'), 'utf-8'))
     const majorVer = pkg.version.split('.')[0]
     const lines = []
-    for (const filePath of await fg(['dist/mjs/*.mjs', 'dist/global-js/*.global.js'])) {
+    for (const filePath of await fg(['dist/*.mjs', 'dist/*.global.js'], { cwd: rootdir })) {
       const matched = /([^/]*?)[.](d.mts|d.ts|global.js|mjs|js)$/.exec(filePath)
       if (_.isNil(matched)) continue
       // console.log(`filePath: ${filePath}, matched: ${JSON.stringify(matched)}`)
