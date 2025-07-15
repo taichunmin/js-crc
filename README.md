@@ -4,6 +4,10 @@
 
 <p>A cross platform alternative for calculating Cyclic Redundancy Checks (CRC) values.</p>
 
+<p>
+<a href="https://taichunmin.idv.tw/pug/crccalc.html"><b>Demo</b></a>
+</p>
+
 [![npm version](https://img.shields.io/npm/v/@taichunmin/crc.svg?logo=npm)](https://www.npmjs.org/package/@taichunmin/crc)
 [![jsdelivr hits](https://img.shields.io/jsdelivr/npm/hm/@taichunmin/crc?logo=jsdelivr)](https://www.jsdelivr.com/package/npm/@taichunmin/crc)
 [![Build status](https://img.shields.io/github/actions/workflow/status/taichunmin/js-crc/ci.yml?branch=master)](https://github.com/taichunmin/js-crc/actions/workflows/ci.yml)

@@ -69,9 +69,10 @@ export class GenericCrc32 {
 
   exportCrcFn (): string {
     const prev = u32ToHex((this.refout ? reflect.u32(this.initial) : this.initial) ^ this.xorout)
-    const xorout = this.xorout === 0 ? '' : ` ^ ${u32ToHex(this.xorout)}`
+    const xorout1 = this.xorout === 0 ? '' : `\nconst xorout = ${u32ToHex(this.xorout)}`
+    const xorout2 = this.xorout === 0 ? '' : ' ^ xorout // revert xorout'
+    const ret = this.xorout === 0 ? 'u32[0]' : '(u32[0] ^ xorout) >>> 0'
     const loop = this.refin ? 'POLY_TABLE[(u32[0] ^ b) & 0xFF] ^ (u32[0] >>> 8)' : 'POLY_TABLE[(u32[0] >>> 24) ^ b] ^ (u32[0] << 8)'
-    const ret = xorout === '' ? 'u32[0]' : `(u32[0]${xorout}) >>> 0`
     return `import { setObject, u32 } from './common2'
 
 const POLY_TABLE = new Uint32Array([
@@ -84,9 +85,9 @@ const POLY_TABLE = new Uint32Array([
  * - xorout: ${u32ToHex(this.xorout)}
  * - refin: ${this.refin}
  * - refout: ${this.refout}
- */
+ */${xorout1}
 export default function ${this.name} (buf: Uint8Array = new Uint8Array(), prev: number = ${prev}): number {
-  u32[0] = prev${xorout} // revert of refout and xorout
+  u32[0] = prev${xorout2}
   for (const b of buf) u32[0] = ${loop}
   return ${ret}
 }

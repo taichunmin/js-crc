@@ -69,7 +69,8 @@ export class GenericCrc16 {
 
   exportCrcFn (): string {
     const prev = u16ToHex((this.refout ? reflect.u16(this.initial) : this.initial) ^ this.xorout)
-    const xorout = this.xorout === 0 ? '' : ` ^ ${u16ToHex(this.xorout)}`
+    const xorout1 = this.xorout === 0 ? '' : `\nconst xorout = ${u16ToHex(this.xorout)}`
+    const xorout2 = this.xorout === 0 ? '' : ' ^ xorout // revert xorout'
     const loop = this.refin ? 'POLY_TABLE[(u16[0] ^ b) & 0xFF] ^ (u16[0] >>> 8)' : 'POLY_TABLE[(u16[0] >>> 8) ^ b] ^ (u16[0] << 8)'
     return `import { setObject, u16 } from './common2'
 
@@ -83,11 +84,11 @@ const POLY_TABLE = new Uint16Array([
  * - xorout: ${u16ToHex(this.xorout)}
  * - refin: ${this.refin}
  * - refout: ${this.refout}
- */
+ */${xorout1}
 export default function ${this.name} (buf: Uint8Array = new Uint8Array(), prev: number = ${prev}): number {
-  u16[0] = prev${xorout} // revert of refout and xorout
+  u16[0] = prev${xorout2}
   for (const b of buf) u16[0] = ${loop}
-  return u16[0]${xorout}
+  return u16[0]${xorout2}
 }
 
 setObject(globalThis, ['taichunmin', 'crc', '${this.name}'], ${this.name})

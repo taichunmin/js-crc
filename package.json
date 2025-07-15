@@ -8,7 +8,7 @@
   "module": "dist/index.mjs",
   "name": "@taichunmin/crc",
   "types": "dist/index.d.ts",
-  "version": "0.0.21",
+  "version": "0.0.22",
   "author": {
     "email": "taichunmin@gmail.com",
     "name": "Chunmin Tai",
@@ -140,6 +140,7 @@
   "scripts": {
     "build": "yarn build:js && yarn build:cjsInterop",
     "build:cjsInterop": "tsx ./build-utils/cjsInterop.ts",
+    "build:fastcrc": "tsx ./build-utils/genfastcrc.ts",
     "build:js": "tsup",
     "lint": "yarn lint:ci --fix",
     "lint:ci": "eslint --ext ts --fix ./lib",

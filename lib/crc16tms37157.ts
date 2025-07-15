@@ -43,7 +43,7 @@ const POLY_TABLE = new Uint16Array([
  * - refout: true
  */
 export default function crc16tms37157 (buf: Uint8Array = new Uint8Array(), prev: number = 0x3791): number {
-  u16[0] = prev // revert of refout and xorout
+  u16[0] = prev
   for (const b of buf) u16[0] = POLY_TABLE[(u16[0] ^ b) & 0xFF] ^ (u16[0] >>> 8)
   return u16[0]
 }

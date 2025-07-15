@@ -42,10 +42,11 @@ const POLY_TABLE = new Uint8Array([
  * - refin: false
  * - refout: false
  */
+const xorout = 0xFF
 export default function crc8gsmb (buf: Uint8Array = new Uint8Array(), prev: number = 0xFF): number {
-  u8[0] = prev ^ 0xFF
+  u8[0] = prev ^ xorout // revert xorout
   for (const b of buf) u8[0] = POLY_TABLE[u8[0] ^ b]
-  return u8[0] ^ 0xFF
+  return u8[0] ^ xorout // revert xorout
 }
 
 setObject(globalThis, ['taichunmin', 'crc', 'crc8gsmb'], crc8gsmb)

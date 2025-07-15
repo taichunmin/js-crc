@@ -43,7 +43,7 @@ const POLY_TABLE = new Uint32Array([
  * - refout: true
  */
 export default function crc32mef (buf: Uint8Array = new Uint8Array(), prev: number = 0xFFFFFFFF): number {
-  u32[0] = prev // revert of refout and xorout
+  u32[0] = prev
   for (const b of buf) u32[0] = POLY_TABLE[(u32[0] ^ b) & 0xFF] ^ (u32[0] >>> 8)
   return u32[0]
 }

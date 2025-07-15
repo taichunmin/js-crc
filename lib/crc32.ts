@@ -42,10 +42,11 @@ const POLY_TABLE = new Uint32Array([
  * - refin: true
  * - refout: true
  */
+const xorout = 0xFFFFFFFF
 export default function crc32 (buf: Uint8Array = new Uint8Array(), prev: number = 0x00000000): number {
-  u32[0] = prev ^ 0xFFFFFFFF // revert of refout and xorout
+  u32[0] = prev ^ xorout // revert xorout
   for (const b of buf) u32[0] = POLY_TABLE[(u32[0] ^ b) & 0xFF] ^ (u32[0] >>> 8)
-  return (u32[0] ^ 0xFFFFFFFF) >>> 0
+  return (u32[0] ^ xorout) >>> 0
 }
 
 setObject(globalThis, ['taichunmin', 'crc', 'crc32'], crc32)

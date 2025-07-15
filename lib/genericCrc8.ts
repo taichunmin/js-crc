@@ -64,7 +64,8 @@ export class GenericCrc8 {
 
   exportCrcFn (): string {
     const prev = u8ToHex((this.refout ? reflect.u8(this.initial) : this.initial) ^ this.xorout)
-    const xorout = this.xorout === 0 ? '' : ` ^ ${u8ToHex(this.xorout)}`
+    const xorout1 = this.xorout === 0 ? '' : `\nconst xorout = ${u8ToHex(this.xorout)}`
+    const xorout2 = this.xorout === 0 ? '' : ' ^ xorout // revert xorout'
     return `import { setObject, u8 } from './common2'
 
 const POLY_TABLE = new Uint8Array([
@@ -77,11 +78,11 @@ const POLY_TABLE = new Uint8Array([
  * - xorout: ${u8ToHex(this.xorout)}
  * - refin: ${this.refin}
  * - refout: ${this.refout}
- */
+ */${xorout1}
 export default function ${this.name} (buf: Uint8Array = new Uint8Array(), prev: number = ${prev}): number {
-  u8[0] = prev${xorout}
+  u8[0] = prev${xorout2}
   for (const b of buf) u8[0] = POLY_TABLE[u8[0] ^ b]
-  return u8[0]${xorout}
+  return u8[0]${xorout2}
 }
 
 setObject(globalThis, ['taichunmin', 'crc', '${this.name}'], ${this.name})
