@@ -1,9 +1,9 @@
-import * as GenericCrc8 from '../lib/genericCrc8'
+import fsPromises from 'fs/promises'
+import _ from 'lodash'
+import path from 'path'
 import * as GenericCrc16 from '../lib/genericCrc16'
 import * as GenericCrc32 from '../lib/genericCrc32'
-import fsPromises from 'fs/promises'
-import path from 'path'
-import _ from 'lodash'
+import * as GenericCrc8 from '../lib/genericCrc8'
 
 const rootdir = path.resolve(__dirname, '../')
 const codeHexToU8Arr = `

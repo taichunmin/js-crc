@@ -144,7 +144,7 @@
     "build:js": "tsup",
     "lint": "yarn lint:ci --fix",
     "lint:ci": "eslint --ext ts --fix ./lib",
-    "publish:test": "npm publish --access public --dry-run",
+    "publish:test": "npm pack --dry-run",
     "test": "jest --roots ./lib --",
     "test:ci": "jest --roots ./lib --ci --coverage"
   }
